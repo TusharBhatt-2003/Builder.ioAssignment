@@ -1,11 +1,11 @@
 import { builder } from "@builder.io/sdk";
 import { RenderBuilderContent } from "../../components/builder";
 import Category from "@/components/Category/Category";
-import Hero from "@/components/Hero/Hero";
+// import Hero from "@/components/Hero/Hero";
 import Search from "@/components/Search/Search";
-import BlogWrapper from "@/components/BlogWrapper/BlogWrapper";
-import BlogComp from "@/components/BlogComp/BlogComp";
-import Featured from "@/components/Featured/Featured";
+// import BlogWrapper from "@/components/BlogWrapper/BlogWrapper";
+// import BlogComp from "@/components/BlogComp/BlogComp";
+// import Featured from "@/components/Featured/Featured";
 
 // Builder Public API Key set in .env file
 builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
