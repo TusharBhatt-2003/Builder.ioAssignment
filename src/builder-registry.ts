@@ -1,42 +1,17 @@
 "use client";
 import { builder, Builder } from "@builder.io/react";
 import BlogComp from "./components/BlogComp/BlogComp";
-import BlogWrapper from "./components/BlogWrapper/BlogWrapper";
-import Counter from "./components/Counter/Counter";
+import BlogComponent from "./components/BlogPost/BlogPost";
+import BlogContainer from "./components/BlogContainer/BlogContainer";
+import Category from "./components/Category/Category";
 import FAQ from "./components/FAQ/FAQ";
-import Featured from "./components/Featured/Featured";
 import FeaturedBlogComp from "./components/Featured/FeaturedBlogComp";
 import Hero from "./components/Hero/Hero";
 import Pagination from "./components/Pagination/Pagination ";
 import Testimony from "./components/Testimony/Testimony";
+import ViewAll from "./components/Button/ViewAll";
 
 builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
-
-Builder.registerComponent(Counter, {
-  name: "Counter",
-  inputs: [
-    {
-      name: "initialCount",
-      type: "number",
-    },
-  ],
-});
-// Register BlogWrapper with Builder.io
-
-Builder.registerComponent(BlogWrapper, {
-  name: "BlogWrapper",
-  inputs: [
-    {
-      name: "gap",
-      type: "string",
-      defaultValue: "4",
-      friendlyName: "Gap between children",
-    },
-  ],
-  childRequirements: {
-    message: "Drag and drop BlogComp components here!",
-  },
-});
 
 Builder.registerComponent(BlogComp, {
   name: "BlogComp",
@@ -106,7 +81,6 @@ Builder.registerComponent(Pagination, {
     },
   ],
 });
-// Register the FeaturedBlogComp component as a Builder component
 
 Builder.registerComponent(FeaturedBlogComp, {
   name: "FeaturedBlogComp",
@@ -132,51 +106,6 @@ Builder.registerComponent(FeaturedBlogComp, {
       defaultValue: "This is a description.",
     },
     { name: "link", type: "url", required: true, defaultValue: "#" },
-  ],
-});
-// Register the Featured component as a Builder component
-
-Builder.registerComponent(Featured, {
-  name: "Featured",
-  inputs: [
-    {
-      name: "title",
-      type: "string",
-      defaultValue: "Insights and updates",
-    },
-    {
-      name: "description",
-      type: "string",
-      defaultValue: "Stay Informed with our latest articles",
-    },
-  ],
-  // Allow children components to be added dynamically
-  canHaveChildren: true,
-});
-
-Builder.registerComponent(FAQ, {
-  name: "FAQ",
-  inputs: [
-    {
-      name: "items",
-      type: "list",
-      subFields: [
-        { name: "question", type: "text", required: true },
-        { name: "answer", type: "text", required: true },
-      ],
-      defaultValue: [
-        {
-          question: "What is Builder.io?",
-          answer:
-            "Builder.io is a drag-and-drop page builder for modern web apps.",
-        },
-        {
-          question: "How does this FAQ work?",
-          answer:
-            'Click on the "+" icon to reveal the answer below the question.',
-        },
-      ],
-    },
   ],
 });
 
@@ -217,4 +146,45 @@ Builder.registerComponent(Testimony, {
       defaultValue: "Sr. Recruiter @Google Inc.",
     },
   ],
+});
+
+Builder.registerComponent(Category, {
+  name: "Category",
+  inputs: [
+    {
+      name: "categories",
+      type: "list",
+      subFields: [
+        {
+          name: "category",
+          type: "string",
+          defaultValue: "New Category",
+        },
+        {
+          name: "link",
+          type: "url",
+          defaultValue: "#",
+        },
+      ],
+      defaultValue: [
+        { category: "view all", link: "/view-all" },
+        { category: "healthcare trends", link: "/healthcare-trends" },
+        { category: "AI insights", link: "/ai-insights" },
+        { category: "case studies", link: "/case-studies" },
+        { category: "best practices", link: "/best-practices" },
+      ],
+    },
+  ],
+});
+
+Builder.registerComponent(ViewAll, {
+  name: "ViewAll",
+});
+
+Builder.registerComponent(BlogComponent, {
+  name: "BlogComponent",
+});
+
+Builder.registerComponent(BlogContainer, {
+  name: "BlogContainer",
 });

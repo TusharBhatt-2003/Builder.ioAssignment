@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Builder } from "@builder.io/react";
+import Image from "next/image";
 
 interface FAQItem {
   question: string;
@@ -29,7 +29,9 @@ const FAQ: React.FC<FAQProps> = ({ items = defaultFAQs }) => {
               onClick={() => toggleAnswer(index)}
               className="focus:outline-none"
             >
-              <img
+              <Image
+                width="100"
+                height="100"
                 src={openIndex === index ? "/minus.svg" : "/plus.svg"}
                 alt={openIndex === index ? "Collapse" : "Expand"}
                 className="w-6 h-6"

@@ -4,10 +4,10 @@ import React from "react";
 export default function CTA() {
   return (
     <div
-      className="w-full h-[60vh] bg-cover bg-center flex justify-center items-center my-5 "
+      className="w-full bg-cover bg-center flex justify-center items-center my-5 "
       style={{ backgroundImage: `url('footerUp.jpeg')` }}
     >
-      <div className="w-[80%] h-[80%] bg-white rounded-lg flex gap-12 flex-col justify-center items-center">
+      <div className="bg-white m-10 p-10 rounded-lg flex gap-12 flex-col justify-center items-center">
         <div className="w-[70%] space-y-5">
           <h1 className="font-bold text-3xl">
             Schedule Your Consultation Today

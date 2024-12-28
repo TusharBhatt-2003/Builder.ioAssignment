@@ -1,4 +1,5 @@
 import { Builder } from "@builder.io/react";
+import Image from "next/image";
 import React from "react";
 
 type FeaturedBlogCompProp = {
@@ -22,7 +23,9 @@ const FeaturedBlogComp: React.FC<FeaturedBlogCompProp> = ({
     <div className="max-w-sm md:w-[25vw]  h-96 bg-[white] rounded-lg overflow-hidden">
       {/* Image */}
       <div className="h-48 ">
-        <img
+        <Image
+          width="100"
+          height="100"
           src={imageSrc}
           alt={title}
           className="object-cover rounded-lg w-full h-full"
@@ -38,7 +41,7 @@ const FeaturedBlogComp: React.FC<FeaturedBlogCompProp> = ({
               {category}
             </span>
             {/* Time */}
-            <span className="text-sm text-black">{time}</span>
+            <span className="text-sm font-semibold text-black">{time}</span>
           </div>
 
           {/* Title */}
@@ -48,12 +51,15 @@ const FeaturedBlogComp: React.FC<FeaturedBlogCompProp> = ({
           <p className="text-xs text-gray-600 mb-4">{description}</p>
         </div>
         {/* Read More Link */}
-        <a
-          href={link}
-          className="text-teal-500 text-sm font-semibold flex items-center hover:underline"
-        >
-          Read more <span className="ml-1">&rarr;</span>
-        </a>
+        <div className="flex gap-2">
+          <a
+            href={link}
+            className="text-teal-500 text-sm underline font-semibold flex items-center hover:underline"
+          >
+            Read more
+          </a>
+          <Image alt="redirect" src="arrowIcon.svg" width="10" height="10" />
+        </div>
       </div>
     </div>
   );
