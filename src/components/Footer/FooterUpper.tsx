@@ -16,10 +16,10 @@ export default function FooterUpper() {
     },
   ];
   return (
-    <div className="flex justify-between items-center max-w-5xl mx-auto mt-6 mb-20 pb-10">
+    <div className="grid grid-cols-2 lg:flex justify-between items-center max-w-5xl mx-auto  p-10">
       {footerUpperLinks.map(({ title, links }) => (
         <div key={title} className="items-center">
-          <h1 className="text-xl font-bold">{title}</h1>
+          <h1 className="text-xl mt-5 font-bold">{title}</h1>
           <ul className="list-none flex flex-col">
             {links.map((link, index) => (
               <li key={index} className="inline-block">

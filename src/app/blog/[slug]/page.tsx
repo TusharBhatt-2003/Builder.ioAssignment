@@ -1,22 +1,27 @@
 "use client";
 
-import BlogComp from "@/components/BlogComp/BlogComp";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { builder } from "@builder.io/react"; // Import Builder SDK and React component
+import { RenderBuilderContent } from "@/components/builder";
+
+// Replace with your Public API Key
+builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
 
 interface BlogData {
   title: string;
   description: string;
-  authorName: string;
+  authorname: string;
   intro: string;
   introPara2: string;
-  authorAvatar: string;
+  authoravatar: string;
   image: string;
   tag: string;
-  time: string;
+  read: string;
   date: string;
   blogImg: string;
   body: string;
+  socials?: { [key: string]: string }; // Assuming this field contains social media links
 }
 
 interface Blog {
@@ -24,65 +29,63 @@ interface Blog {
   data: BlogData;
 }
 
-export default function BlogPostPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>; // `params` is a Promise now
-}) {
-  const [slug, setSlug] = useState<string | null>(null);
+export default function BlogPostPage({ params }: { params: { slug: string } }) {
   const [blog, setBlog] = useState<Blog | null>(null);
-  const [relatedBlogs, setRelatedBlogs] = useState<Blog[]>([]); // New state for related blogs
+  const [relatedBlogs, setRelatedBlogs] = useState<Blog[]>([]);
+  const [content, setContent] = useState(null); // State for Builder.io content
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const unwrapParams = async () => {
+    const fetchBlogData = async () => {
       try {
-        const unwrappedParams = await params; // Await the params Promise
-        setSlug(unwrappedParams.slug);
-      } catch (err) {
-        console.error("Failed to unwrap params:", err);
-        setError("Failed to load blog, please try again later.");
-      }
-    };
-
-    unwrapParams();
-  }, [params]);
-
-  useEffect(() => {
-    if (!slug) return; // Only fetch if slug is available
-
-    const fetchBlog = async () => {
-      setLoading(true);
-      setError(null); // Reset error state
-      try {
+        setLoading(true);
         const response = await fetch(
-          `https://cdn.builder.io/api/v2/content/blog?apiKey=2f632f128c9249388f79d2da77ae0417`
+          `https://cdn.builder.io/api/v2/content/blogs?apiKey=2f632f128c9249388f79d2da77ae0417`
         );
         const data = await response.json();
 
-        // Find the specific blog by its slug
-        const foundBlog = data.results.find((item: any) => item.id === slug);
-
+        // Find the specific blog by slug
+        const foundBlog = data.results.find(
+          (item: any) => item.data.slug === params.slug
+        );
         if (foundBlog) {
-          setBlog(foundBlog); // Set the found blog in state
+          setBlog(foundBlog);
+
+          // Fetch related blogs by filtering or selecting
+          const related = data.results.filter(
+            (item: any) => item.id !== foundBlog.id
+          );
+          setRelatedBlogs(related);
         } else {
           setError("Blog not found.");
         }
-
-        // Fetch related blogs by filtering or selecting from the data
-        const related = data.results.filter((item: any) => item.id !== slug); // Example filter
-        setRelatedBlogs(related); // Set related blogs state
-      } catch (error) {
-        console.error("Error fetching data:", error);
+      } catch (err) {
         setError("Failed to load blog, please try again later.");
+        console.error(err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchBlog();
-  }, [slug]);
+    const fetchBuilderContent = async () => {
+      try {
+        const builderContent = await builder
+          .get("blogs", {
+            userAttributes: {
+              urlPath: `/${params.slug}`,
+            },
+          })
+          .toPromise();
+        setContent(builderContent);
+      } catch (err) {
+        console.error("Failed to fetch Builder.io content:", err);
+      }
+    };
+
+    fetchBlogData();
+    fetchBuilderContent();
+  }, [params.slug]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -96,85 +99,119 @@ export default function BlogPostPage({
     return <div>Blog not found.</div>;
   }
 
+  // Social media data from the API response
+  const socials = blog.data.socials || {}; // Assuming socials are part of the API response
+
   return (
-    <div className="p-5 py-20 w-full flex flex-col justify-center items-center">
-      <div className="md:w-[50%]">
-        <p className="text-[#00C7BE] text-xs font-bold">ALL POST</p>
-        <h1 className="text-4xl font-bold ">{blog.data.title}</h1>
-      </div>
-      <div className="flex gap-5 m-5">
-        <div className="flex gap-2">
-          <Image
-            src={blog.data.authorAvatar}
-            alt={blog.data.authorName}
-            width="100"
-            height="100"
-            className="w-6 h-6 border border-black rounded-full"
-          />
+    <div className="p-5 py-20 w-full">
+      <div className="w-full grid place-content-center">
+        <div className="">
+          <p className="text-[#00C7BE] text-xs font-bold">ALL POST</p>
+          <h1 className="text-4xl font-bold">{blog.data.title}</h1>
+        </div>
+        <div className="flex gap-5 m-5">
+          <div className="flex gap-2">
+            <Image
+              src={blog.data.authoravatar}
+              alt={blog.data.authorname}
+              width="100"
+              height="100"
+              className="w-6 h-6 border border-black rounded-full"
+            />
+            <p className="text-sm font-semibold text-[#595959]">
+              {blog.data.authorname}
+            </p>
+          </div>
           <p className="text-sm font-semibold text-[#595959]">
-            {blog.data.authorName}
+            {blog.data.date}
+          </p>
+          <p className="text-sm font-semibold text-[#595959]">
+            {blog.data.read}
           </p>
         </div>
-        <p className="text-sm font-semibold text-[#595959]">{blog.data.date}</p>
-        <p className="text-sm font-semibold text-[#595959]">{blog.data.time}</p>
       </div>
-      <div className="w-full">
-        <Image
-          src={blog.data.blogImg}
-          alt={blog.data.title}
-          width="100"
-          height="100"
-          className="w-full h-full lg:h-[80vh] center border-2 rounded-lg"
-        />
+
+      {/* Render Builder.io section */}
+      <div className="w-full h-full">
+        <RenderBuilderContent content={content} model="blogs" />
       </div>
-      <div className="lg:flex gap-5">
-        <div className="text-left lg:w-[70%] py-10">
-          <h1 className="text-xl font-bold">Introduction</h1>
-          <p className="py-2 text-sm text-[#595959]">{blog.data.intro}</p>
-          <p className="py-2 text-sm text-[#595959]">{blog.data.introPara2}</p>
+      <div className="flex lg:flex-row flex-col items-center gap-5 lg:py-10 pt-10 lg:px-20 lg:w-[65%] justify-between">
+        <div className="flex items-center gap-5">
+          <div className="flex items-center gap-2">
+            <Image
+              alt={blog.data.authorname}
+              src={blog.data.authoravatar}
+              width="100"
+              height="100"
+              className="border border-black rounded-full w-10 h-10"
+            />
+            <p>{blog.data.authorname}</p>
+          </div>
+          <p>{blog.data.date}</p>
+          <p className="text-[#00C7BE] font-semibold">{blog.data.category}</p>
         </div>
-        <div className="text-left space-y-20 lg:w-[30%] py-10">
-          <div>
-            <h1 className="text-xl py-5 font-bold">Related Posts</h1>
-            <div className="space-y-3">
-              {relatedBlogs.slice(0, 3).map((relatedBlog) => (
-                <BlogComp
-                  className="bg-[#F1F1F3] px-5"
-                  key={relatedBlog.id}
-                  // image={relatedBlog.data.image}
-                  title={relatedBlog.data.title}
-                  description={relatedBlog.data.description}
-                  author={{
-                    name: relatedBlog.data.authorName,
-                    image: relatedBlog.data.authorAvatar,
-                  }}
-                  tag={relatedBlog.data.tag}
-                  time={relatedBlog.data.time}
-                  slug={relatedBlog.id} // Passing the unique slug from Builder.io
-                />
-              ))}
-            </div>
-          </div>
-          <div className="space-y-5">
-            <h1 className="text-xl  font-bold">
-              WeframeTech News <br />
-              Weekly
-            </h1>
-            <p className="text-sm text-[#595959]">
-              Stay informed on our latest AI advancements and business insights
-              by joining the Symbiofy newsletter. By subscribing, you consent to
-              our Privacy Policy.
-            </p>
-            <div className="flex rounded-lg ">
-              <input
-                placeholder="Enter your email"
-                className="bg-[#E4E4E7] rounded-l-lg px-5"
+        {/* Social Media Links */}
+        <div className="flex gap-3">
+          {blog.data.link && (
+            <a
+              href={blog.data.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-blue-500"
+            >
+              <Image
+                height="40"
+                width="40"
+                src="/post-info_link.png"
+                alt="Profile Link"
               />
-              <button className="bg-[#00C7BE] text-white py-2 px-5 rounded-r-md">
-                Join Now
-              </button>
-            </div>
-          </div>
+            </a>
+          )}
+          {blog.data.x && (
+            <a
+              href={blog.data.x}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-blue-500"
+            >
+              <Image
+                height="40"
+                width="40"
+                src="/X-link.png"
+                alt="Profile Link"
+              />
+            </a>
+          )}
+          {blog.data.linkedin && (
+            <a
+              href={blog.data.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-blue-500"
+            >
+              <Image
+                height="40"
+                width="40"
+                src="/linked-in.png"
+                alt="Profile Link"
+              />
+            </a>
+          )}
+          {blog.data.facebook && (
+            <a
+              href={blog.data.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-blue-500"
+            >
+              <Image
+                height="40"
+                width="40"
+                src="/facebook.png"
+                alt="Profile Link"
+              />
+            </a>
+          )}
         </div>
       </div>
     </div>

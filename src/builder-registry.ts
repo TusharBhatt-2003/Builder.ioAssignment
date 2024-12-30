@@ -1,41 +1,18 @@
 "use client";
 import { builder, Builder } from "@builder.io/react";
-import BlogComp from "./components/BlogComp/BlogComp";
-import BlogComponent from "./components/BlogPost/BlogPost";
 import BlogContainer from "./components/BlogContainer/BlogContainer";
-import Category from "./components/Category/Category";
+import BlogImage from "./components/Blog-Post/BlogImage";
+import BlogList from "./components/Blog-Post/BlogList";
+import CaseStudy from "./components/CaseStudy/CaseStudy";
 import FAQ from "./components/FAQ/FAQ";
+import Featured from "./components/Featured/Featured";
 import FeaturedBlogComp from "./components/Featured/FeaturedBlogComp";
+import Heading from "./components/Blog-Post/Heading";
 import Hero from "./components/Hero/Hero";
-import Pagination from "./components/Pagination/Pagination ";
+import Paragraph from "./components/Blog-Post/Paragraph";
 import Testimony from "./components/Testimony/Testimony";
-import ViewAll from "./components/Button/ViewAll";
 
 builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
-
-Builder.registerComponent(BlogComp, {
-  name: "BlogComp",
-  inputs: [
-    {
-      name: "image",
-      type: "file",
-      allowedFileTypes: ["jpeg", "png"],
-      defaultValue: "default-image.jpg",
-    },
-    { name: "title", type: "string", defaultValue: "Blog Title" },
-    { name: "description", type: "string", defaultValue: "Blog description" },
-    {
-      name: "author",
-      type: "object",
-      subFields: [
-        { name: "name", type: "string", defaultValue: "Author Name" },
-        { name: "image", type: "file", allowedFileTypes: ["jpeg", "png"] },
-      ],
-    },
-    { name: "tag", type: "string", defaultValue: "Tag" },
-    { name: "time", type: "string", defaultValue: "5 mins" },
-  ],
-});
 
 Builder.registerComponent(Hero, {
   name: "Hero",
@@ -62,22 +39,6 @@ Builder.registerComponent(Hero, {
       name: "containerClassName",
       type: "text",
       defaultValue: "text-left my-10 mx-5",
-    },
-  ],
-});
-
-Builder.registerComponent(Pagination, {
-  name: "Pagination",
-  inputs: [
-    {
-      name: "currentPage",
-      type: "number",
-      required: true,
-    },
-    {
-      name: "totalPages",
-      type: "number",
-      required: true,
     },
   ],
 });
@@ -148,43 +109,281 @@ Builder.registerComponent(Testimony, {
   ],
 });
 
-Builder.registerComponent(Category, {
-  name: "Category",
+Builder.registerComponent(BlogContainer, {
+  name: "BlogContainer",
+});
+
+Builder.registerComponent(Featured, {
+  name: "Featured",
+});
+
+Builder.registerComponent(CaseStudy, {
+  name: "CaseStudy",
+});
+
+Builder.registerComponent(BlogImage, {
+  name: "BlogImage",
   inputs: [
     {
-      name: "categories",
-      type: "list",
-      subFields: [
-        {
-          name: "category",
-          type: "string",
-          defaultValue: "New Category",
-        },
-        {
-          name: "link",
-          type: "url",
-          defaultValue: "#",
-        },
+      name: "altText",
+      type: "string",
+    },
+    {
+      name: "imageFile",
+      type: "object",
+      hideFromUI: true,
+      meta: {
+        ts: "File",
+      },
+      required: true,
+    },
+  ],
+});
+
+Builder.registerComponent(Heading, {
+  name: "Heading",
+  inputs: [
+    {
+      name: "alignment",
+      type: "string",
+      enum: ["center", "left", "right"],
+    },
+    {
+      name: "color",
+      type: "string",
+    },
+    {
+      name: "fontWeight",
+      type: "string",
+      enum: ["bold", "bolder", "lighter", "normal"],
+    },
+    {
+      name: "size",
+      type: "string",
+      enum: ["2xl", "3xl", "4xl", "5xl", "6xl", "lg", "md", "sm", "xl", "xs"],
+      required: true,
+    },
+    {
+      name: "text",
+      type: "string",
+      required: true,
+    },
+  ],
+});
+
+Builder.registerComponent(Paragraph, {
+  name: "Paragraph",
+  inputs: [
+    {
+      name: "color",
+      type: "string",
+    },
+    {
+      name: "fontSize",
+      type: "string",
+    },
+    {
+      name: "lineHeight",
+      type: "string",
+    },
+    {
+      name: "text",
+      type: "string",
+      required: true,
+    },
+  ],
+});
+
+Builder.registerComponent(Heading, {
+  name: "Heading",
+  inputs: [
+    {
+      name: "text",
+      type: "string",
+      defaultValue: "Your Heading Text",
+      required: true,
+      helperText: "Enter the text for the heading.",
+    },
+    {
+      name: "size",
+      type: "string",
+      enum: ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl"], // Tailwind sizes
+      defaultValue: "xl",
+      required: true,
+      helperText: "Select the size of the heading.",
+      options: [
+        { value: "xs", label: "Extra Small (xs)" },
+        { value: "sm", label: "Small (sm)" },
+        { value: "md", label: "Medium (md)" },
+        { value: "lg", label: "Large (lg)" },
+        { value: "xl", label: "Extra Large (xl)" },
+        { value: "2xl", label: "2x Extra Large (2xl)" },
+        { value: "3xl", label: "3x Extra Large (3xl)" },
+        { value: "4xl", label: "4x Extra Large (4xl)" },
+        { value: "5xl", label: "5x Extra Large (5xl)" },
+        { value: "6xl", label: "6x Extra Large (6xl)" },
       ],
-      defaultValue: [
-        { category: "view all", link: "/view-all" },
-        { category: "healthcare trends", link: "/healthcare-trends" },
-        { category: "AI insights", link: "/ai-insights" },
-        { category: "case studies", link: "/case-studies" },
-        { category: "best practices", link: "/best-practices" },
+    },
+    {
+      name: "alignment",
+      type: "string",
+      enum: ["left", "center", "right"], // Alignment options
+      defaultValue: "left",
+      helperText: "Select the alignment for the heading.",
+      options: [
+        { value: "left", label: "Left" },
+        { value: "center", label: "Center" },
+        { value: "right", label: "Right" },
+      ],
+    },
+    {
+      name: "color",
+      type: "color", // Allow color picking in Builder
+      defaultValue: "#000",
+      helperText: "Pick a color for the heading.",
+    },
+    {
+      name: "fontWeight",
+      type: "string",
+      enum: [
+        "normal",
+        "bold",
+        "lighter",
+        "bolder",
+        "100",
+        "200",
+        "300",
+        "400",
+        "500",
+        "600",
+        "700",
+        "800",
+        "900",
+      ],
+      defaultValue: "normal",
+      helperText: "Choose the font weight for the heading.",
+      options: [
+        { value: "normal", label: "Normal" },
+        { value: "bold", label: "Bold" },
+        { value: "lighter", label: "Lighter" },
+        { value: "bolder", label: "Bolder" },
+        { value: "100", label: "100" },
+        { value: "200", label: "200" },
+        { value: "300", label: "300" },
+        { value: "400", label: "400" },
+        { value: "500", label: "500" },
+        { value: "600", label: "600" },
+        { value: "700", label: "700" },
+        { value: "800", label: "800" },
+        { value: "900", label: "900" },
       ],
     },
   ],
 });
 
-Builder.registerComponent(ViewAll, {
-  name: "ViewAll",
+Builder.registerComponent(Paragraph, {
+  name: "Paragraph",
+  inputs: [
+    {
+      name: "text",
+      type: "string", // Text input for the paragraph
+      required: true,
+      helperText: "Enter the text for the paragraph.",
+    },
+    {
+      name: "fontSize",
+      type: "string",
+      defaultValue: "16px", // Default font size
+      helperText: "Select a font size.",
+      // Predefined options for font size
+      options: [
+        { value: "12px", label: "12px" },
+        { value: "14px", label: "14px" },
+        { value: "16px", label: "16px" },
+        { value: "18px", label: "18px" },
+        { value: "20px", label: "20px" },
+        { value: "24px", label: "24px" },
+      ],
+    },
+    {
+      name: "color",
+      type: "string",
+      defaultValue: "black", // Default color
+      helperText: "Select the text color.",
+      options: [
+        { value: "black", label: "Black" },
+        { value: "red", label: "Red" },
+        { value: "blue", label: "Blue" },
+        { value: "green", label: "Green" },
+        { value: "gray", label: "Gray" },
+      ],
+    },
+    {
+      name: "lineHeight",
+      type: "string",
+      defaultValue: "1.5", // Default line height
+      helperText: "Select the line height.",
+      // Predefined options for line height
+      options: [
+        { value: "1.2", label: "1.2" },
+        { value: "1.5", label: "1.5" },
+        { value: "1.8", label: "1.8" },
+        { value: "2", label: "2" },
+      ],
+    },
+  ],
 });
 
-Builder.registerComponent(BlogComponent, {
-  name: "BlogComponent",
+Builder.registerComponent(BlogList, {
+  name: "BlogList",
+  inputs: [
+    {
+      name: "items",
+      type: "object",
+      hideFromUI: true,
+      meta: {
+        ts: "string[]",
+      },
+      required: true,
+    },
+  ],
 });
 
-Builder.registerComponent(BlogContainer, {
-  name: "BlogContainer",
+Builder.registerComponent(BlogImage, {
+  name: "BlogImage",
+  inputs: [
+    {
+      name: "imageFile",
+      type: "file", // File picker for image
+      allowedFileTypes: ["jpg", "jpeg", "png", "webp", "gif"], // Restrict file types
+      required: true,
+      helperText: "Upload an image file (e.g., jpg, png, webp, gif).",
+    },
+    {
+      name: "altText",
+      type: "string",
+      defaultValue: "Image description",
+    },
+  ],
+});
+
+Builder.registerComponent(BlogList, {
+  name: "BlogList",
+  inputs: [
+    {
+      name: "item1",
+      type: "string", // Input for first item
+      helperText: "Enter list item 1",
+    },
+    {
+      name: "item2",
+      type: "string", // Input for second item
+      helperText: "Enter list item 2",
+    },
+    {
+      name: "item3",
+      type: "string", // Input for third item
+      helperText: "Enter list item 3",
+    },
+  ],
 });

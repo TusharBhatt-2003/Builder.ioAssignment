@@ -25,7 +25,6 @@ export default async function Page(props: PageProps) {
 
   return (
     <>
-      {/* <Featured /> */}
       {/* Render the Builder page */}
       <RenderBuilderContent content={content} model={builderModelName} />
     </>

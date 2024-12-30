@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import FeaturedBlogComp from "./FeaturedBlogComp"; // Assuming FeaturedBlogComp is a custom component
+import FeaturedBlogComp from "../Featured/FeaturedBlogComp";
 
 type BlogData = {
   title: string;
@@ -20,7 +20,7 @@ interface Blog {
   id: string;
 }
 
-const Featured: React.FC = () => {
+const CaseStudy: React.FC = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]); // State for all blogs
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -64,13 +64,13 @@ const Featured: React.FC = () => {
   }
 
   // Filter blogs to only include those with casestudy === true
-  const filteredBlogs = blogs.filter((blog) => blog.data.feature);
+  const filteredBlogs = blogs.filter((blog) => blog.data.casestudy);
 
   // Determine blogs to display based on showAll state
   const blogsToDisplay = showAll ? filteredBlogs : filteredBlogs.slice(0, 3);
 
   return (
-    <div className="py-10 bg-[#F1F1F3]  grid place-content-center">
+    <div className="py-10  grid place-content-center">
       {/* Grid layout for Featured Blogs */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
         {blogsToDisplay.map((blog) => (
@@ -100,4 +100,4 @@ const Featured: React.FC = () => {
   );
 };
 
-export default Featured;
+export default CaseStudy;
