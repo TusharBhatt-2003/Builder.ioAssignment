@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { builder } from "@builder.io/react";
@@ -7,7 +5,6 @@ import { RenderBuilderContent } from "@/components/builder";
 
 builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
 
-// Type for the blog data
 interface BlogData {
   title: string;
   description: string;
@@ -29,7 +26,7 @@ interface Blog {
 }
 
 interface BlogPostPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export default function BlogPostPage({ params }: BlogPostPageProps) {
@@ -41,15 +38,16 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
   const [slug, setSlug] = useState<string | null>(null);
 
   useEffect(() => {
-    const resolveParams = async () => {
+    const fetchSlug = async () => {
       try {
-        setSlug(params.slug);
+        const resolvedParams = await params;
+        setSlug(resolvedParams.slug);
       } catch (err) {
         setError("Failed to resolve parameters.");
       }
     };
 
-    resolveParams();
+    fetchSlug();
   }, [params]);
 
   useEffect(() => {
@@ -144,7 +142,6 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
       </div>
 
-      {/* Render Builder.io section */}
       <div className="w-full h-full">
         <RenderBuilderContent content={content} model="blogs" />
       </div>
