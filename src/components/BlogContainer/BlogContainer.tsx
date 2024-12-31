@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import BlogComp from "../BlogComp/BlogComp";
 import Search from "../Search/Search"; // Import the Search component
 import Category from "../Category/Category"; // Assuming Category component is imported
-import Pagination from "../Pagination/Pagination";
+import Pagination from "../Pagination/Pagination ";
 
 interface BlogData {
   title: string;
