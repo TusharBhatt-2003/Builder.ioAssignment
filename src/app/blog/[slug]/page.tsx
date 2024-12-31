@@ -2,12 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { builder } from "@builder.io/react"; // Import Builder SDK and React component
+import { builder } from "@builder.io/react";
 import { RenderBuilderContent } from "@/components/builder";
 
-// Replace with your Public API Key
 builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
 
+// Type for the blog data
 interface BlogData {
   title: string;
   description: string;
@@ -28,18 +28,33 @@ interface Blog {
   data: BlogData;
 }
 
-export default function BlogPostPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+interface BlogPostPageProps {
+  params: { slug: string };
+}
+
+export default function BlogPostPage({ params }: BlogPostPageProps) {
   const [blog, setBlog] = useState<Blog | null>(null);
   const [relatedBlogs, setRelatedBlogs] = useState<Blog[]>([]);
-  const [content, setContent] = useState(null); // State for Builder.io content
+  const [content, setContent] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [slug, setSlug] = useState<string | null>(null);
 
   useEffect(() => {
+    const resolveParams = async () => {
+      try {
+        setSlug(params.slug);
+      } catch (err) {
+        setError("Failed to resolve parameters.");
+      }
+    };
+
+    resolveParams();
+  }, [params]);
+
+  useEffect(() => {
+    if (!slug) return;
+
     const fetchBlogData = async () => {
       try {
         setLoading(true);
@@ -48,14 +63,12 @@ export default function BlogPostPage({
         );
         const data = await response.json();
 
-        // Find the specific blog by slug
         const foundBlog = data.results.find(
-          (item: any) => item.data.slug === params.slug
+          (item: any) => item.data.slug === slug
         );
         if (foundBlog) {
           setBlog(foundBlog);
 
-          // Fetch related blogs by filtering or selecting
           const related = data.results.filter(
             (item: any) => item.id !== foundBlog.id
           );
@@ -76,7 +89,7 @@ export default function BlogPostPage({
         const builderContent = await builder
           .get("blogs", {
             userAttributes: {
-              urlPath: `/${params.slug}`,
+              urlPath: `/${slug}`,
             },
           })
           .toPromise();
@@ -88,7 +101,7 @@ export default function BlogPostPage({
 
     fetchBlogData();
     fetchBuilderContent();
-  }, [params.slug]);
+  }, [slug]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -102,9 +115,6 @@ export default function BlogPostPage({
     return <div>Blog not found.</div>;
   }
 
-  // Social media data from the API response
-  const socials = blog.data.socials || {}; // Assuming socials are part of the API response
-
   return (
     <div className="p-5 py-20 w-full">
       <div className="w-full grid place-content-center">
@@ -117,8 +127,8 @@ export default function BlogPostPage({
             <Image
               src={blog.data.authoravatar}
               alt={blog.data.authorname}
-              width="100"
-              height="100"
+              width={100}
+              height={100}
               className="w-6 h-6 border border-black rounded-full"
             />
             <p className="text-sm font-semibold text-[#595959]">
