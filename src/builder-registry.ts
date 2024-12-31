@@ -4,12 +4,14 @@ import BlogContainer from "./components/BlogContainer/BlogContainer";
 import BlogImage from "./components/Blog-Post/BlogImage";
 import BlogList from "./components/Blog-Post/BlogList";
 import CaseStudy from "./components/CaseStudy/CaseStudy";
+import EmailSubmition from "./components/Blog-Post/EmailSubmition";
 import FAQ from "./components/FAQ/FAQ";
 import Featured from "./components/Featured/Featured";
-import FeaturedBlogComp from "./components/Featured/FeaturedBlogComp";
 import Heading from "./components/Blog-Post/Heading";
 import Hero from "./components/Hero/Hero";
 import Paragraph from "./components/Blog-Post/Paragraph";
+import RelatedPosts from "./components/Blog-Post/RelatedPosts";
+import Social from "./components/Blog-Post/Social";
 import Testimony from "./components/Testimony/Testimony";
 
 builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
@@ -40,33 +42,6 @@ Builder.registerComponent(Hero, {
       type: "text",
       defaultValue: "text-left my-10 mx-5",
     },
-  ],
-});
-
-Builder.registerComponent(FeaturedBlogComp, {
-  name: "FeaturedBlogComp",
-  inputs: [
-    {
-      name: "imageSrc",
-      type: "string",
-      required: true,
-      defaultValue: "https://via.placeholder.com/150",
-    },
-    { name: "category", type: "string", required: true, defaultValue: "News" },
-    { name: "time", type: "string", required: true, defaultValue: "5 mins" },
-    {
-      name: "title",
-      type: "string",
-      required: true,
-      defaultValue: "Default Title",
-    },
-    {
-      name: "description",
-      type: "string",
-      required: true,
-      defaultValue: "This is a description.",
-    },
-    { name: "link", type: "url", required: true, defaultValue: "#" },
   ],
 });
 
@@ -384,6 +359,87 @@ Builder.registerComponent(BlogList, {
       name: "item3",
       type: "string", // Input for third item
       helperText: "Enter list item 3",
+    },
+  ],
+});
+
+Builder.registerComponent(Social, {
+  name: "Social",
+  inputs: [
+    {
+      name: "authorname",
+      type: "string",
+      defaultValue: "John Doe",
+      helperText: "Name of the author",
+    },
+    {
+      name: "authoravatar",
+      type: "file", // Change to 'file' for image uploads
+      helperText: "Upload an avatar image for the author",
+      defaultValue: "/default-avatar.png",
+    },
+    {
+      name: "date",
+      type: "string",
+      defaultValue: "2024-12-31",
+      helperText: "Date of the blog post",
+    },
+    {
+      name: "category",
+      type: "string",
+      defaultValue: "Tech",
+      helperText: "Blog post category",
+    },
+    {
+      name: "link",
+      type: "url",
+      helperText: "Profile link URL",
+    },
+    {
+      name: "x",
+      type: "url",
+      helperText: "Twitter profile URL",
+    },
+    {
+      name: "linkedin",
+      type: "url",
+      helperText: "LinkedIn profile URL",
+    },
+    {
+      name: "facebook",
+      type: "url",
+      helperText: "Facebook profile URL",
+    },
+  ],
+});
+
+Builder.registerComponent(EmailSubmition, {
+  name: "EmailSubmition",
+  inputs: [
+    {
+      name: "heading",
+      type: "string",
+      defaultValue: "WeframeTech News Weekly",
+    },
+    {
+      name: "paragraph",
+      type: "string",
+      defaultValue:
+        "Stay informed on our latest AI advancements and business insights by joining the Symbiofy newsletter. By subscribing, you consent to our Privacy Policy.",
+    },
+    { name: "placeholder", type: "string", defaultValue: "Enter your email" },
+    { name: "buttonText", type: "string", defaultValue: "Join now" },
+  ],
+});
+
+Builder.registerComponent(RelatedPosts, {
+  name: "RelatedPosts",
+  inputs: [
+    {
+      name: "reference",
+      type: "reference",
+      model: "blog",
+      required: true,
     },
   ],
 });

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
 interface CategoryProps {
-  categories: { category: string; link: string }[]; // Categories with name and link
+  categories?: { category: string; link: string }[]; // Categories with name and link
   setSelectedCategory: React.Dispatch<React.SetStateAction<string | null>>; // Callback to set selected category
 }
 
 const Category: React.FC<CategoryProps> = ({
-  categories,
+  categories = [], // Default value to avoid undefined
   setSelectedCategory,
 }) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -31,27 +31,31 @@ const Category: React.FC<CategoryProps> = ({
         >
           View All
         </button>
-        {categories.map((item, index) => (
-          <li
-            key={index}
-            className={`cursor-pointer font-semibold ${
-              activeIndex === index
-                ? "text-[#00C7BE]"
-                : "text-[#595959] hover:text-[#00C7BE]"
-            }`}
-          >
-            <a
-              href={item.link}
-              onClick={(e) => {
-                e.preventDefault();
-                handleCategoryClick(item.category, index);
-              }}
-              className="transition-colors duration-200"
+        {categories.length > 0 ? (
+          categories.map((item, index) => (
+            <li
+              key={index}
+              className={`cursor-pointer font-semibold ${
+                activeIndex === index
+                  ? "text-[#00C7BE]"
+                  : "text-[#595959] hover:text-[#00C7BE]"
+              }`}
             >
-              {item.category}
-            </a>
-          </li>
-        ))}
+              <a
+                href={item.link}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleCategoryClick(item.category, index);
+                }}
+                className="transition-colors duration-200"
+              >
+                {item.category}
+              </a>
+            </li>
+          ))
+        ) : (
+          <p>No categories available.</p>
+        )}
       </ul>
     </div>
   );
