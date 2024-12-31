@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import BlogComp from "../BlogComp/BlogComp";
 import Search from "../Search/Search"; // Import the Search component
 import Category from "../Category/Category"; // Assuming Category component is imported
-import Pagination from "../Pagination/Pagination ";
+import Pagination from "../Pagination/Pagination";
 
 interface BlogData {
   title: string;
@@ -19,7 +19,7 @@ interface BlogData {
 
 interface Blog {
   data: BlogData;
-  id: string[];
+  id: string;
 }
 
 const BlogContainer = () => {
@@ -35,7 +35,7 @@ const BlogContainer = () => {
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const blogsPerPage = 9; // Set the number of blogs to display per page (9)
+  const blogsPerPage = 9; // Set the number of blogs to display per page
 
   // Fetch blogs data
   useEffect(() => {
@@ -51,7 +51,7 @@ const BlogContainer = () => {
         setFilteredBlogs(data.results); // Set the fetched blogs as filtered initially
 
         // Extract unique categories from blogs
-        const categoriesSet = new Set(
+        const categoriesSet = new Set<string>(
           data.results.map((blog: Blog) => blog.data.category)
         );
         const categoriesArray = Array.from(categoriesSet).map((category) => ({
