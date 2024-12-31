@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,7 +12,7 @@ interface BlogCompProps {
   title: string;
   description: string;
   author: Author;
-  tag: string[]; // Change to an array of strings
+  tag: string[]; // Array of strings
   time: string;
   slug: string; // Unique slug for the blog (coming from Builder.io)
   className?: string; // Optional className prop

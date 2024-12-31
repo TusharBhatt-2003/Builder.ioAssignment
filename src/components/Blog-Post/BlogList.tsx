@@ -1,7 +1,4 @@
 "use client";
-
-import React from "react";
-
 interface BlogListProps {
   item1?: string;
   item2?: string;
