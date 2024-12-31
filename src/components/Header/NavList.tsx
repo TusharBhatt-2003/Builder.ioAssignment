@@ -4,30 +4,45 @@ import { builder } from "@builder.io/sdk";
 
 builder.init("2f632f128c9249388f79d2da77ae0417");
 
-const NavList = () => {
-  const [navItems, setNavItems] = useState([]);
+const NavList: React.FC = () => {
+  const [navItems, setNavItems] = useState<
+    { label: string; reference?: { id: string } }[]
+  >([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     builder
       .get("nav-list")
       .promise()
       .then(({ data }) => {
-        // Set the fetched data to state
         setNavItems(data.list || []);
+      })
+      .catch((err) => {
+        console.error("Error fetching nav items:", err);
+        setError("Failed to load navigation items.");
       });
   }, []);
 
+  if (error) {
+    return <div className="text-red-500">{error}</div>;
+  }
+
   return (
-    <nav className="flex text-sm items-center space-x-4 ">
+    <nav className="flex text-sm items-center space-x-4">
       <ul className="flex gap-5">
         {navItems.length > 0 ? (
           navItems.map((item, index) => (
             <li key={index}>
               {item.reference ? (
-                // If there's a reference, you can link to the referenced page (you may need to fetch the page details or use a URL)
-                <a href={`/page/${item.reference.id}`}>{item.label}</a>
+                <a
+                  href={`/page/${item.reference.id}`}
+                  className="text-blue-600 hover:underline"
+                  aria-label={`Navigate to ${item.label || "Page"}`}
+                >
+                  {item.label || "Untitled"}
+                </a>
               ) : (
-                <span>{item.label}</span> // If there's no reference, display the label as plain text
+                <span>{item.label || "Untitled"}</span>
               )}
             </li>
           ))
