@@ -4,10 +4,16 @@ import { builder } from "@builder.io/sdk";
 
 builder.init("2f632f128c9249388f79d2da77ae0417");
 
+interface NavItem {
+  label: string;
+  reference?: {
+    id: string; // ID field (optional)
+    url?: string; // Direct URL field (if available)
+  };
+}
+
 const NavList: React.FC = () => {
-  const [navItems, setNavItems] = useState<
-    { label: string; reference?: { id: string } }[]
-  >([]);
+  const [navItems, setNavItems] = useState<NavItem[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -33,10 +39,10 @@ const NavList: React.FC = () => {
         {navItems.length > 0 ? (
           navItems.map((item, index) => (
             <li key={index}>
-              {item.reference ? (
+              {item.reference?.url ? (
                 <a
-                  href={`/page/${item.reference.id}`}
-                  className="text-blue-600 hover:underline"
+                  href={item.reference.url}
+                  className="text-blue-600 hover:underline cursor-pointer"
                   aria-label={`Navigate to ${item.label || "Page"}`}
                 >
                   {item.label || "Untitled"}
