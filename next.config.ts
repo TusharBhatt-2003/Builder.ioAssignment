@@ -6,6 +6,9 @@ const nextConfig: NextConfig = BuilderDevTools()({
   images: {
     domains: ["cdn.builder.io", "s3-alpha-sig.figma.com"], // Add required domains
   },
+  eslint: {
+    ignoreDuringBuilds: false,
+  },
 });
 
 export default nextConfig;
