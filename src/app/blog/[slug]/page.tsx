@@ -21,7 +21,6 @@ interface BlogData {
   date: string;
   blogImg: string;
   body: string;
-  socials?: { [key: string]: string }; // Assuming this field contains social media links
 }
 
 interface Blog {
@@ -29,7 +28,11 @@ interface Blog {
   data: BlogData;
 }
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
+export default function BlogPostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const [blog, setBlog] = useState<Blog | null>(null);
   const [relatedBlogs, setRelatedBlogs] = useState<Blog[]>([]);
   const [content, setContent] = useState(null); // State for Builder.io content
