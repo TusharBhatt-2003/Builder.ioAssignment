@@ -1,40 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { builder } from "@builder.io/sdk"; // Assuming you're using Builder.io
-import BlogComp from "../BlogComp/BlogComp";
+import { useEffect } from "react";
 
-export default function RelatedPosts({ reference }) {
+interface RelatedPostsProps {
+  reference: { slug: string }; // Adjust type based on the actual structure of 'reference'
+}
+
+export default function RelatedPosts({ reference }: RelatedPostsProps) {
   useEffect(() => {
     // Fetch the section data based on the reference passed
     const fetchSectionData = async () => {
-      const result = await builder
-        .get("blogs", { query: { reference: reference } }) // Adjust if your model name is different
-        .promise();
-
-      // Assuming that the section data will contain the blog posts or relevant information
-      if (result?.results?.length > 0) {
-        const sectionData = result.results[0].data; // Adjust based on how data is nested in your section
-        setData(sectionData); // Set the section data
-      }
+      const response = await fetch(
+        `https://cdn.builder.io/api/v2/content/blogs?apiKey=2f632f128c9249388f79d2da77ae0417${reference.slug}`
+      );
+      const data = await response.json();
+      // Handle data
     };
 
     fetchSectionData();
-  }, [reference]); // Re-fetch when reference changes
+  }, [reference]);
 
-  return (
-    <div>
-      <BlogComp
-        image={data.blogcardimage}
-        title={post.title}
-        description={post.desc}
-        author={{
-          name: post.authorname,
-          image: post.authoravatar,
-        }}
-        tag={post.tag}
-        time={post.read}
-        slug={post.slug}
-        casestudy={post.casestudy}
-      />
-    </div>
-  );
+  return <div>Related posts content</div>;
 }
