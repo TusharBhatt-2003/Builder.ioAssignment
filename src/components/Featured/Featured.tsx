@@ -76,12 +76,13 @@ const Featured: React.FC = () => {
         {blogsToDisplay.map((blog) => (
           <FeaturedBlogComp
             key={blog.id}
-            imageSrc={blog.data.blogcardimage}
-            category={blog.data.category}
-            time={blog.data.read}
-            title={blog.data.title}
-            description={blog.data.desc}
+            imageSrc={blog.data.blogcardimage || "default-image.jpg"}
+            category={blog.data.category || "Uncategorized"}
+            time={blog.data.read || "N/A"}
+            title={blog.data.title || "Untitled"}
+            description={blog.data.desc || "No description available"}
             slug={blog.data.slug}
+            link={`/blog/${blog.data.slug}`} // Pass the link property
           />
         ))}
       </div>
