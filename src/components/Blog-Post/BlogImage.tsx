@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 
 interface ImageProps {
-  imageFile: File | null; // File input for the image, can be null
+  imageFile: string | null; // File input for the image, can be null
   altText?: string; // Alternative text for the image
 }
 
