@@ -10,9 +10,9 @@ type BlogData = {
   tag: string[];
   read: string;
   category: string;
-  casestudy: boolean; // Assuming casestudy is a boolean field in the API data
+  casestudy: boolean;
   slug: string;
-  feature: boolean; // Assuming feature is a boolean field in the API data
+  feature: boolean;
 };
 
 interface Blog {
@@ -21,12 +21,11 @@ interface Blog {
 }
 
 const CaseStudy: React.FC = () => {
-  const [blogs, setBlogs] = useState<Blog[]>([]); // State for all blogs
+  const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [showAll, setShowAll] = useState(false); // State to toggle between showing 3 blogs and all blogs
+  const [showAll, setShowAll] = useState(false);
 
-  // Fetch blogs data from API
   useEffect(() => {
     const fetchBlogs = async () => {
       setLoading(true);
@@ -36,7 +35,7 @@ const CaseStudy: React.FC = () => {
           `https://cdn.builder.io/api/v2/content/blogs?apiKey=2f632f128c9249388f79d2da77ae0417&limit=50`
         );
         const data = await response.json();
-        setBlogs(data.results); // Store all blogs in state
+        setBlogs(data.results);
       } catch (error) {
         console.error("Error fetching data:", error);
         setError("Failed to load blogs, please try again later.");
@@ -48,30 +47,23 @@ const CaseStudy: React.FC = () => {
     fetchBlogs();
   }, []);
 
-  // Loading state
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  // Error state
   if (error) {
     return <div className="text-center text-red-500">{error}</div>;
   }
 
-  // If no blogs are found
   if (blogs.length === 0) {
     return <div className="text-center">No blogs available.</div>;
   }
 
-  // Filter blogs to only include those with casestudy === true
   const filteredBlogs = blogs.filter((blog) => blog.data.casestudy);
-
-  // Determine blogs to display based on showAll state
   const blogsToDisplay = showAll ? filteredBlogs : filteredBlogs.slice(0, 3);
 
   return (
-    <div className="py-10  grid place-content-center">
-      {/* Grid layout for Featured Blogs */}
+    <div className="py-10 grid place-content-center">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
         {blogsToDisplay.map((blog) => (
           <FeaturedBlogComp
@@ -82,10 +74,10 @@ const CaseStudy: React.FC = () => {
             title={blog.data.title}
             description={blog.data.desc}
             slug={blog.data.slug}
+            link={`/blogs/${blog.data.slug}`}
           />
         ))}
       </div>
-      {/* See More Button */}
       {filteredBlogs.length > 3 && (
         <div className="text-center mt-8">
           <button
