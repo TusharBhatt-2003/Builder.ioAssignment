@@ -4,12 +4,12 @@ import Link from "next/link";
 import React from "react";
 
 type FeaturedBlogCompProp = {
-  imageSrc: string; // Image source URL
-  category: string; // Category label (e.g., "News")
-  time: string; // Time label (e.g., "5 mins")
-  title: string; // Title of the card
-  description: string; // Description of the card
-  link: string; // Link for the "Read more" button
+  imageSrc: string;
+  category: string;
+  time: string;
+  title: string;
+  description: string;
+  link: string;
   slug: string;
 };
 
