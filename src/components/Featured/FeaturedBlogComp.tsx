@@ -23,7 +23,6 @@ const FeaturedBlogComp: React.FC<FeaturedBlogCompProp> = ({
 }) => {
   return (
     <div className="max-w-sm h-full md:w-[25vw] flex flex-col justify-between  bg-white rounded-lg overflow-hidden">
-      {/* Image */}
       <div>
         <div className="h-48">
           <Image

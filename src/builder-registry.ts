@@ -3,10 +3,8 @@ import { builder, Builder } from "@builder.io/react";
 import BlogContainer from "./components/BlogContainer/BlogContainer";
 import BlogImage from "./components/Blog-Post/BlogImage";
 import BlogList from "./components/Blog-Post/BlogList";
-
 import EmailSubmition from "./components/Blog-Post/EmailSubmition";
 import FAQ from "./components/FAQ/FAQ";
-
 import Heading from "./components/Blog-Post/Heading";
 import Hero from "./components/Hero/Hero";
 import Paragraph from "./components/Blog-Post/Paragraph";

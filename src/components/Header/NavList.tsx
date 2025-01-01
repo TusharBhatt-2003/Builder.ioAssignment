@@ -26,7 +26,7 @@ interface NavItem {
         };
       };
     };
-  }[]; // Array of sub-list items
+  }[];
 }
 
 const NavList: React.FC = () => {

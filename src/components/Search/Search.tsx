@@ -9,7 +9,7 @@ interface SearchProps {
 export default function Search({ setSearchQuery }: SearchProps) {
   return (
     <div className="flex border-2 border-[#00C7BE] rounded-lg py-2 px-4">
-      <Image src="/search.svg" alt="search" width="25" height="25" />
+      <Image src="/Search.svg" alt="search" width="25" height="25" />
       <input
         type="text"
         placeholder="Search..."
