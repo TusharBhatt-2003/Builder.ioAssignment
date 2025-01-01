@@ -2,31 +2,25 @@
 
 import React, { useEffect, useState, useMemo } from "react";
 import { builder } from "@builder.io/sdk";
-import { FaChevronDown } from "react-icons/fa"; // Icon for dropdown (using react-icons)
+import { FaChevronDown } from "react-icons/fa";
 
-// Initialize Builder.io with your API key
-builder.init("2f632f128c9249388f79d2da77ae0417");
-
-// Define the structure of each resource item
 interface ResourceItem {
   label: string;
 }
 
 const ResourcesDropdown: React.FC = () => {
-  const [resources, setResources] = useState<ResourceItem[]>([]); // Type the state to be an array of ResourceItem
-  const [isOpen, setIsOpen] = useState<boolean>(false); // Type the state to be a boolean
+  const [resources, setResources] = useState<ResourceItem[]>([]);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
     builder
       .get("resources")
       .promise()
       .then(({ data }) => {
-        // Set the fetched data to state
         setResources(data.list || []);
       });
   }, []);
 
-  // Memoize the rendered resources to prevent unnecessary re-renders
   const renderedResources = useMemo(() => {
     return resources.length > 0 ? (
       resources.map((item, index) => (
@@ -41,19 +35,17 @@ const ResourcesDropdown: React.FC = () => {
 
   return (
     <div className="text-sm relative">
-      {/* Display label and icon */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center"
-        aria-expanded={isOpen} // Add aria-expanded for accessibility
+        aria-expanded={isOpen}
       >
-        <span className="mr-2">Resources</span> {/* Label for the dropdown */}
+        <span className="mr-2">Resources</span>
         <FaChevronDown
           className={`transition-transform ${isOpen ? "rotate-180" : ""}`}
         />
       </button>
 
-      {/* Conditionally render dropdown options */}
       {isOpen && (
         <ul className="absolute mt-2 border p-2 rounded bg-white shadow-lg z-10 rounded-lg">
           {renderedResources}
