@@ -6,13 +6,14 @@ import BlogList from "./components/Blog-Post/BlogList";
 import CaseStudy from "./components/CaseStudy/CaseStudy";
 import EmailSubmition from "./components/Blog-Post/EmailSubmition";
 import FAQ from "./components/FAQ/FAQ";
-import Featured from "./components/Featured/Featured";
+
 import Heading from "./components/Blog-Post/Heading";
 import Hero from "./components/Hero/Hero";
 import Paragraph from "./components/Blog-Post/Paragraph";
 import RelatedPosts from "./components/Blog-Post/RelatedPosts";
 import Social from "./components/Blog-Post/Social";
 import Testimony from "./components/Testimony/Testimony";
+import Featured from "./components/Featured/Featured";
 
 builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
 
@@ -86,10 +87,6 @@ Builder.registerComponent(Testimony, {
 
 Builder.registerComponent(BlogContainer, {
   name: "BlogContainer",
-});
-
-Builder.registerComponent(Featured, {
-  name: "Featured",
 });
 
 Builder.registerComponent(CaseStudy, {
@@ -440,6 +437,24 @@ Builder.registerComponent(RelatedPosts, {
       type: "reference",
       model: "blog",
       required: true,
+    },
+  ],
+});
+
+Builder.registerComponent(Featured, {
+  name: "Featured",
+  inputs: [
+    {
+      name: "reference",
+      type: "list",
+      subFields: [
+        {
+          name: "value",
+          type: "reference",
+          model: "blog",
+          required: true,
+        },
+      ],
     },
   ],
 });

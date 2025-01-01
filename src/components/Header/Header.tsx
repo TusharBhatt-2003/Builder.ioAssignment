@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import NewsLetter from "./NewsLetter";
 import NavList from "./NavList";
-import ResourcesDropdown from "./ResourceDropdown";
 
 function Header() {
   return (
@@ -20,7 +19,6 @@ function Header() {
           {/* Navigation and Dropdown Section */}
           <div className="hidden md:flex gap-5">
             <NavList />
-            <ResourcesDropdown />
           </div>
 
           {/* Buttons Section */}

@@ -9,7 +9,7 @@ interface FAQItem {
 }
 
 interface FAQProps {
-  items?: FAQItem[]; // Items can be passed from Builder.io
+  items?: FAQItem[];
 }
 
 const FAQ: React.FC<FAQProps> = ({ items = defaultFAQs }) => {
