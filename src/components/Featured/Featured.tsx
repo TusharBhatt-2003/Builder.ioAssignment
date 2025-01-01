@@ -1,9 +1,7 @@
 "use client";
-import React, { useState } from "react"; // Import useState for state management
-
+import React, { useState } from "react";
 import FeaturedBlogComp from "./FeaturedBlogComp";
 
-// Define the BlogData type
 interface BlogData {
   title: string;
   desc: string;
@@ -28,13 +26,12 @@ interface FeaturedProps {
 }
 
 const Featured: React.FC<FeaturedProps> = ({ reference }) => {
-  const [showAll, setShowAll] = useState(false); // State to manage "view all" toggle
+  const [showAll, setShowAll] = useState(false);
 
   if (!reference || reference.length === 0) {
     return <div>No references available.</div>;
   }
 
-  // Determine how many items to display based on the showAll state
   const blogsToDisplay = showAll ? reference : reference.slice(0, 3);
 
   return (
@@ -59,10 +56,10 @@ const Featured: React.FC<FeaturedProps> = ({ reference }) => {
       {reference.length > 3 && (
         <div className="text-center m-8">
           <button
-            onClick={() => setShowAll(!showAll)} // Toggle showAll state on button click
+            onClick={() => setShowAll(!showAll)}
             className="px-4 py-2 border-2 capitalize rounded-lg border-[#00C7BE] text-[#00C7BE]"
           >
-            {showAll ? "View Less" : "View All"} {/* Toggle button text */}
+            {showAll ? "View Less" : "View All"}
           </button>
         </div>
       )}
