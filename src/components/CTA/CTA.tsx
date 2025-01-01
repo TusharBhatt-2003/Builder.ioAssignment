@@ -7,7 +7,7 @@ export default function CTA() {
       className="w-full bg-cover bg-center flex justify-center items-center my-5 "
       style={{ backgroundImage: `url('/footerUp.jpeg')` }}
     >
-      <div className="bg-white m-10 p-5 md:p-10 rounded-lg flex gap-5 md:gap-12 flex-col justify-center items-center">
+      <form className="bg-white m-10 p-5 md:p-10 rounded-lg flex gap-5 md:gap-12 flex-col justify-center items-center">
         <div className="w-[85%] md:w-[70%] space-y-5">
           <h1 className="font-bold text-xl md:text-3xl">
             Schedule Your Consultation Today
@@ -27,11 +27,16 @@ export default function CTA() {
                 height="25"
               />
               <input
+                type="email"
+                required
                 placeholder="Enter your email"
-                className="placeholder:text-sm 0 w-fit md:w-full placeholder:text-[#B3B3B3]"
+                className="placeholder:text-sm 0 outline-none w-fit md:w-full placeholder:text-[#B3B3B3]"
               />
             </div>
-            <button className="bg-[#00C7BE] md:w-fit w-full border-2 border-[#00C7BE] text-white p-2 lg:px-4 lg:py-3 rounded-lg capitalize ">
+            <button
+              type="submit"
+              className="bg-[#00C7BE] hover:bg-[#a5f8f4] md:w-fit w-full border-2 border-[#00C7BE] text-white p-2 lg:px-4 lg:py-3 rounded-lg capitalize "
+            >
               Book a meeting
             </button>
           </div>
@@ -39,7 +44,7 @@ export default function CTA() {
             By submitting you agree to our privacy policy.
           </p>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

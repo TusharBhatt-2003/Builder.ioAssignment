@@ -54,7 +54,7 @@ const FeaturedBlogComp: React.FC<FeaturedBlogCompProp> = ({
         >
           Read more
         </Link>
-        <Image alt="redirect" src="arrowIcon.svg" width="10" height="10" />
+        <Image alt="redirect" src="/arrowIcon.svg" width="10" height="10" />
       </div>
     </div>
   );

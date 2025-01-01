@@ -20,9 +20,12 @@ const FAQ: React.FC<FAQProps> = ({ items = defaultFAQs }) => {
   };
 
   return (
-    <div className="faq-container border border-[#eeeeee] p-4 rounded-lg shadow space-y-4">
+    <div className="faq-container  space-y-4">
       {items.map((item, index) => (
-        <div key={index} className="faq-item">
+        <div
+          key={index}
+          className="faq-item border border-[#eeeeee] p-4 rounded-lg shadow"
+        >
           <div className="flex justify-between items-center">
             <h3 className="font-semibold">{item.question}</h3>
             <button

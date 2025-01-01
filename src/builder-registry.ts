@@ -3,7 +3,7 @@ import { builder, Builder } from "@builder.io/react";
 import BlogContainer from "./components/BlogContainer/BlogContainer";
 import BlogImage from "./components/Blog-Post/BlogImage";
 import BlogList from "./components/Blog-Post/BlogList";
-import CaseStudy from "./components/CaseStudy/CaseStudy";
+
 import EmailSubmition from "./components/Blog-Post/EmailSubmition";
 import FAQ from "./components/FAQ/FAQ";
 
@@ -87,10 +87,6 @@ Builder.registerComponent(Testimony, {
 
 Builder.registerComponent(BlogContainer, {
   name: "BlogContainer",
-});
-
-Builder.registerComponent(CaseStudy, {
-  name: "CaseStudy",
 });
 
 Builder.registerComponent(BlogImage, {
