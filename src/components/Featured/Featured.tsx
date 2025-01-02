@@ -35,7 +35,7 @@ const Featured: React.FC<FeaturedProps> = ({ reference }) => {
   const blogsToDisplay = showAll ? reference : reference.slice(0, 3);
 
   return (
-    <div className="grid bg-[#F1F1F3] place-content-center">
+    <div className="grid bg-[#F1F1F3] justify-center items-center px-5">
       <div className="w-full py-10 justify-center items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
         {/* Map over the blogs to display and render FeaturedBlogComp */}
         {blogsToDisplay.map((ref, index) => (

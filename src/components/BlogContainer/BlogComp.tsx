@@ -12,11 +12,10 @@ interface BlogCompProps {
   title: string;
   description: string;
   author: Author;
-  tag: string[]; // Array of strings
+  tag: string[];
   time: string;
-  slug: string; // Unique slug for the blog (coming from Builder.io)
-  className?: string; // Optional className prop
-  casestudy: boolean;
+  slug: string;
+  className?: string;
 }
 
 const BlogComp = ({
@@ -28,7 +27,6 @@ const BlogComp = ({
   time,
   slug,
   className,
-  casestudy, // Destructure the className prop
 }: BlogCompProps) => {
   const authorImage = author?.image || "/default-author.jpg";
   const authorName = author?.name || "Unknown Author";
@@ -37,24 +35,24 @@ const BlogComp = ({
 
   useEffect(() => {
     const fetchBlogData = async () => {
-      setLoading(true); // Set loading to true when making the API call
+      setLoading(true);
       try {
         const response = await fetch(
           `https://cdn.builder.io/api/v2/content/blogs/${slug}?apiKey=2f632f128c9249388f79d2da77ae0417`
-        ); // Use the slug to fetch specific blog data
+        );
         const data = await response.json();
-        setBlogId(data.slug); // Assuming API returns an object with 'id'
+        setBlogId(data.slug);
       } catch (error) {
         console.error("Error fetching blog data:", error);
       } finally {
-        setLoading(false); // Set loading to false when data is fetched
+        setLoading(false);
       }
     };
 
     fetchBlogData();
   }, [slug]);
 
-  if (loading) return <div className="loading">Loading...</div>; // You can customize the loading message
+  if (loading) return <div className="loading">Loading...</div>;
 
   return (
     <div
@@ -74,8 +72,6 @@ const BlogComp = ({
         </Link>
         <h2 className="text-xl font-bold">{title}</h2>
         <p className="text-[#595959] font-semibold mt-2">{description}</p>
-        {blogId && <p>Blog ID: {blogId}</p>}{" "}
-        {/* Show the blog ID after data is loaded */}
       </div>
       <div className="author-info mt-4 gap-2 flex items-center">
         <Image
@@ -87,11 +83,10 @@ const BlogComp = ({
         />
         <p className="font-semibold text-[#595959]">{authorName}</p>
         <div className="flex gap-2">
-          {/* Map over the tags array and render each tag */}
           {tag.map((singleTag, index) => (
             <p
               key={index}
-              className="text-white bg-[#00C7BE] px-2 rounded-full"
+              className="text-white bg-[#00C7BE] px-2 p-1 rounded-full"
             >
               {singleTag}
             </p>

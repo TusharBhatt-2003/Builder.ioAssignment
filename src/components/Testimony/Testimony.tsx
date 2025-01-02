@@ -3,8 +3,8 @@
 import React from "react";
 
 interface TestimonyProps {
-  message?: string; // Testimony message
-  authorName?: string; // Author's name
+  message?: string;
+  authorName?: string;
 }
 
 const Testimony: React.FC<TestimonyProps> = ({
@@ -13,7 +13,6 @@ const Testimony: React.FC<TestimonyProps> = ({
 }) => {
   return (
     <div className="testimony-container flex flex-col justify-center items-center space-y-4 p-6 border-y">
-      {/* Wrapper div to contain the message */}
       <div className="h-auto w-[75%] flex items-center justify-center">
         {/* Message Text */}
         <p className="text-sm w-full text-black leading-relaxed break-words text-left">

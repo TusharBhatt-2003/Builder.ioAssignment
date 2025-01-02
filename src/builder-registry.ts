@@ -5,13 +5,13 @@ import BlogImage from "./components/Blog-Post/BlogImage";
 import BlogList from "./components/Blog-Post/BlogList";
 import EmailSubmition from "./components/Blog-Post/EmailSubmition";
 import FAQ from "./components/FAQ/FAQ";
+import Featured from "./components/Featured/Featured";
 import Heading from "./components/Blog-Post/Heading";
 import Hero from "./components/Hero/Hero";
 import Paragraph from "./components/Blog-Post/Paragraph";
 import RelatedPosts from "./components/Blog-Post/RelatedPosts";
 import Social from "./components/Blog-Post/Social";
 import Testimony from "./components/Testimony/Testimony";
-import Featured from "./components/Featured/Featured";
 
 builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
 
@@ -354,56 +354,6 @@ Builder.registerComponent(BlogList, {
   ],
 });
 
-Builder.registerComponent(Social, {
-  name: "Social",
-  inputs: [
-    {
-      name: "authorname",
-      type: "string",
-      defaultValue: "John Doe",
-      helperText: "Name of the author",
-    },
-    {
-      name: "authoravatar",
-      type: "file", // Change to 'file' for image uploads
-      helperText: "Upload an avatar image for the author",
-      defaultValue: "/default-avatar.png",
-    },
-    {
-      name: "date",
-      type: "string",
-      defaultValue: "2024-12-31",
-      helperText: "Date of the blog post",
-    },
-    {
-      name: "category",
-      type: "string",
-      defaultValue: "Tech",
-      helperText: "Blog post category",
-    },
-    {
-      name: "link",
-      type: "url",
-      helperText: "Profile link URL",
-    },
-    {
-      name: "x",
-      type: "url",
-      helperText: "Twitter profile URL",
-    },
-    {
-      name: "linkedin",
-      type: "url",
-      helperText: "LinkedIn profile URL",
-    },
-    {
-      name: "facebook",
-      type: "url",
-      helperText: "Facebook profile URL",
-    },
-  ],
-});
-
 Builder.registerComponent(EmailSubmition, {
   name: "EmailSubmition",
   inputs: [
@@ -428,9 +378,15 @@ Builder.registerComponent(RelatedPosts, {
   inputs: [
     {
       name: "reference",
-      type: "reference",
-      model: "blog",
-      required: true,
+      type: "list",
+      subFields: [
+        {
+          name: "value",
+          type: "reference",
+          model: "blog",
+          required: true,
+        },
+      ],
     },
   ],
 });
@@ -449,6 +405,48 @@ Builder.registerComponent(Featured, {
           required: true,
         },
       ],
+    },
+  ],
+});
+
+Builder.registerComponent(Social, {
+  name: "Social",
+  inputs: [
+    {
+      name: "authoravatar",
+      type: "file",
+      required: true,
+    },
+    {
+      name: "authorname",
+      type: "string",
+      required: true,
+    },
+    {
+      name: "category",
+      type: "string",
+      required: true,
+    },
+    {
+      name: "date",
+      type: "string",
+      required: true,
+    },
+    {
+      name: "facebook",
+      type: "string",
+    },
+    {
+      name: "link",
+      type: "string",
+    },
+    {
+      name: "linkedin",
+      type: "string",
+    },
+    {
+      name: "x",
+      type: "string",
     },
   ],
 });

@@ -4,8 +4,8 @@ import React from "react";
 import Image from "next/image";
 
 interface ImageProps {
-  imageFile: string | null; // File input for the image, can be null
-  altText?: string; // Alternative text for the image
+  imageFile: string | null;
+  altText?: string;
 }
 
 const BlogImage: React.FC<ImageProps> = ({

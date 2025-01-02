@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import BlogComp from "../BlogComp/BlogComp";
+import BlogComp from "./BlogComp";
 import Search from "../Search/Search"; // Import the Search component
 import Category from "../Category/Category"; // Assuming Category component is imported
 import Pagination from "../Pagination/Pagination ";
@@ -14,7 +14,6 @@ interface BlogData {
   read: string;
   slug: string;
   category: string;
-  casestudy: boolean;
 }
 
 interface Blog {
@@ -142,7 +141,6 @@ const BlogContainer = () => {
               tag={blog.data.tag}
               time={blog.data.read}
               slug={blog.data.slug}
-              casestudy={blog.data.casestudy}
             />
           ))
         )}

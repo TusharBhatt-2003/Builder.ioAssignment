@@ -114,6 +114,8 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     return <div>Blog not found.</div>;
   }
 
+  console.log(blog);
+
   return (
     <div className="p-5 py-20 w-full">
       <div className="w-full grid place-content-center">

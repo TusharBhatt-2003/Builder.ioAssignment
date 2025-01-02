@@ -3,17 +3,17 @@
 import React from "react";
 
 interface ParagraphProps {
-  text: string; // The text content of the paragraph
-  fontSize?: string; // Optional font size for the paragraph
-  color?: string; // Optional text color
-  lineHeight?: string; // Optional line height
+  text: string;
+  fontSize?: string;
+  color?: string;
+  lineHeight?: string;
 }
 
 const Paragraph: React.FC<ParagraphProps> = ({
   text,
-  fontSize = "16px", // Default font size
-  color = "black", // Default text color
-  lineHeight = "1.5", // Default line height
+  fontSize = "16px",
+  color = "black",
+  lineHeight = "1.5",
 }) => {
   return (
     <p

@@ -6,7 +6,6 @@ import Image from "next/image";
 
 builder.init("2f632f128c9249388f79d2da77ae0417");
 
-// Updated interface to match the structure of the reference data.
 interface Reference {
   id: string;
   url?: string;

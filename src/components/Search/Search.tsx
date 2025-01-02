@@ -1,7 +1,6 @@
 import Image from "next/image";
 import React from "react";
 
-// The Search component receives a function to update the search query
 interface SearchProps {
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }

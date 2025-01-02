@@ -59,7 +59,7 @@ const NavList: React.FC = () => {
 
   return (
     <nav className="flex text-sm items-center space-x-4">
-      <ul className="flex gap-5">
+      <ul className="grid grid-cols-3 md:flex gap-5">
         {navItems.length > 0 ? (
           navItems.map((item, index) => (
             <li key={index} className="relative">

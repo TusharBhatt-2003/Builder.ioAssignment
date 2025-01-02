@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 
 interface CategoryProps {
-  categories?: { category: string; link: string }[]; // Categories with name and link
-  setSelectedCategory: React.Dispatch<React.SetStateAction<string | null>>; // Callback to set selected category
+  categories?: { category: string; link: string }[];
+  setSelectedCategory: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const Category: React.FC<CategoryProps> = ({
-  categories = [], // Default value to avoid undefined
+  categories = [],
   setSelectedCategory,
 }) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const handleCategoryClick = (category: string, index: number) => {
     setActiveIndex(index);
-    setSelectedCategory(category); // Set the active category
+    setSelectedCategory(category);
   };
 
   const handleViewAll = () => {
-    setSelectedCategory(null); // Reset category to show all blogs
-    setActiveIndex(null); // Reset active category index
+    setSelectedCategory(null);
+    setActiveIndex(null);
   };
 
   return (
