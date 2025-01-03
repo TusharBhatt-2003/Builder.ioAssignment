@@ -24,8 +24,7 @@ const Hero: React.FC<HeroProps> = ({
       <div className="container space-y-5 bg-background text-foreground">
         {subtitle && <p className={subtitleClassName}>{subtitle}</p>}
         <h1 className={titleClassName}>{title}</h1>
-        {description && 
-        <p className={descriptionClassName}>{description}</p>}
+        {description && <p className={descriptionClassName}>{description}</p>}
       </div>
     </div>
   );

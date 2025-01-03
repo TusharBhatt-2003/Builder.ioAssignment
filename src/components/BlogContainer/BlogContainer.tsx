@@ -43,7 +43,7 @@ const BlogContainer = () => {
       setError(null);
       try {
         const response = await fetch(
-          `https://cdn.builder.io/api/v2/content/blogs?apiKey=2f632f128c9249388f79d2da77ae0417&limit=50`
+          `https://cdn.builder.io/api/v2/content/blogs?apiKey=2f632f128c9249388f79d2da77ae0417&limit=50`,
         );
         const data = await response.json();
         setBlogs(data.results);
@@ -51,7 +51,7 @@ const BlogContainer = () => {
 
         // Extract unique categories from blogs
         const categoriesSet = new Set<string>(
-          data.results.map((blog: Blog) => blog.data.category)
+          data.results.map((blog: Blog) => blog.data.category),
         );
         const categoriesArray = Array.from(categoriesSet).map((category) => ({
           category,
@@ -80,9 +80,9 @@ const BlogContainer = () => {
           blog.data.title.toLowerCase().includes(lowerCaseQuery) ||
           blog.data.authorname.toLowerCase().includes(lowerCaseQuery) ||
           blog.data.tag.some((tag) =>
-            tag.toLowerCase().includes(lowerCaseQuery)
+            tag.toLowerCase().includes(lowerCaseQuery),
           ) ||
-          blog.data.category.toLowerCase().includes(lowerCaseQuery)
+          blog.data.category.toLowerCase().includes(lowerCaseQuery),
       );
       setFilteredBlogs(filtered);
     }
@@ -93,7 +93,7 @@ const BlogContainer = () => {
     if (selectedCategory) {
       const filtered = blogs.filter(
         (blog) =>
-          blog.data.category.toLowerCase() === selectedCategory.toLowerCase()
+          blog.data.category.toLowerCase() === selectedCategory.toLowerCase(),
       );
       setFilteredBlogs(filtered);
     } else {
@@ -130,7 +130,7 @@ const BlogContainer = () => {
         ) : (
           paginateBlogs(filteredBlogs, currentPage).map((blog) => (
             <BlogComp
-            className="min-h-[400px] bg-background text-foreground mx-w-[320px]"
+              className="min-h-[400px] bg-background text-foreground mx-w-[320px]"
               key={blog.id}
               image={blog.data.blogcardimage}
               title={blog.data.title}

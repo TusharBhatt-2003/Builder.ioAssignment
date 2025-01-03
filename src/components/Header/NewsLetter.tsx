@@ -19,7 +19,7 @@ interface Reference {
 
 const NewsLetter: React.FC = () => {
   const [announcement, setAnnouncement] = useState<string>(
-    "Default Announcement"
+    "Default Announcement",
   );
   const [reference, setReference] = useState<Reference | null>(null);
 

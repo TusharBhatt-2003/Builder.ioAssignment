@@ -446,4 +446,3 @@ Builder.registerComponent(Social, {
     },
   ],
 });
-

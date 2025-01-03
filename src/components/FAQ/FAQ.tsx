@@ -43,7 +43,7 @@ const FAQ: React.FC<FAQProps> = ({ items = defaultFAQs }) => {
       gsap.fromTo(
         answer,
         { height: 0, opacity: 0 },
-        { height: "auto", opacity: 1, duration: 0.2, ease: "power1.out" } // Faster and smoother animation
+        { height: "auto", opacity: 1, duration: 0.2, ease: "power1.out" }, // Faster and smoother animation
       );
     }
   }, [openIndex]);
@@ -63,7 +63,7 @@ const FAQ: React.FC<FAQProps> = ({ items = defaultFAQs }) => {
             >
               {/* Framer Motion Animation on the button */}
               <motion.div
-              whileHover={{ scale: 1.2 }}
+                whileHover={{ scale: 1.2 }}
                 initial={{ rotate: 0 }}
                 animate={{ rotate: openIndex === index ? 180 : 0 }}
                 transition={{ duration: 0.2 }}

@@ -1,9 +1,10 @@
+"use client";
 import React from "react";
 import BlogComp from "../BlogContainer/BlogComp";
 
 interface BlogData {
-  refs?: {
-    value?: {
+  refs: {
+    value: {
       data: {
         title: string;
         desc: string;
@@ -15,13 +16,13 @@ interface BlogData {
         category: string;
         casestudy: boolean;
         slug: string;
-      }
-    } | null;
-  } | null;
+      };
+    };
+  };
 }
 
 interface RelatedPostsProps {
-  refList?: BlogData[] | null; 
+  refList?: BlogData[] | null;
 }
 
 const RelatedPosts: React.FC<RelatedPostsProps> = ({ refList }) => {
@@ -36,7 +37,7 @@ const RelatedPosts: React.FC<RelatedPostsProps> = ({ refList }) => {
       <h1 className="text-4xl py-5 bg-background text-foreground font-bold">
         Related Posts
       </h1>
-      <div className="flex flex-col w-full justify-center items-center gap-5">
+      <div className="w-full flex flex-col justify-center items-center gap-5">
         {refList.map((ref, index) => {
           const data = ref.refs?.value?.data;
 
@@ -53,7 +54,7 @@ const RelatedPosts: React.FC<RelatedPostsProps> = ({ refList }) => {
             <BlogComp
               className="bg-[#F1F1F3] bg-background w-full rounded-lg px-3"
               key={index}
-              image={data.blogcardimage || ""}
+              image={""}
               title={data.title || "Untitled"}
               description={data.desc || "No description available"}
               author={{

@@ -7,12 +7,12 @@ export default function CTA() {
       className="w-full bg-cover bg-center flex justify-center items-center my-5 "
       style={{ backgroundImage: `url('/footerUp.jpeg')` }}
     >
-      <form className="bg-white bg-background text-foreground m-10 p-5 md:p-10 rounded-lg flex gap-5 md:gap-12 flex-col justify-center items-center">
+      <form className=" bg-background text-foreground m-10 p-5 md:p-10 rounded-lg flex gap-5 md:gap-12 flex-col justify-center items-center">
         <div className="w-[85%] md:w-[70%] space-y-5">
           <h1 className="font-bold text-xl md:text-3xl">
             Schedule Your Consultation Today
           </h1>
-          <p className="text-xs text-[#595959]">
+          <p className="text-xs text-[#595959] text-foreground">
             Weframe tech is the modern, award-winning platform that empowers
             some of the largest names in healthcare and advisory sectors.
           </p>

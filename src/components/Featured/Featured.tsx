@@ -38,29 +38,29 @@ const Featured: React.FC<FeaturedProps> = ({ reference }) => {
       <div className="w-full container py-10 justify-center items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
         {/* Map over the blogs to display and render FeaturedBlogComp */}
         {blogsToDisplay.map((ref, index) => {
- const featuredData = ref.value?.value?.data;
+          const featuredData = ref.value?.value?.data;
 
-   // Handle cases where data is not available
-   if (!featuredData) {
-    return (
-      <div key={index} className="bg-[#F1F1F3] p-5">
-        <p className="text-gray-500">Invalid featuredData</p>
-      </div>
-    );
-  }
+          // Handle cases where data is not available
+          if (!featuredData) {
+            return (
+              <div key={index} className="bg-[#F1F1F3] p-5">
+                <p className="text-gray-500">Invalid featuredData</p>
+              </div>
+            );
+          }
           return (
-          <FeaturedBlogComp
-            key={index}
-            imageSrc={featuredData.blogcardimage}
-            category={featuredData.category}
-            time={featuredData.read}
-            title={featuredData.title}
-            description={featuredData.desc}
-            slug={featuredData.slug}
-            link={`/blogs/${featuredData.slug}`}
-          />)
-})}
-
+            <FeaturedBlogComp
+              key={index}
+              imageSrc={featuredData.blogcardimage}
+              category={featuredData.category}
+              time={featuredData.read}
+              title={featuredData.title}
+              description={featuredData.desc}
+              slug={featuredData.slug}
+              link={`/blogs/${featuredData.slug}`}
+            />
+          );
+        })}
       </div>
 
       {/* Show "View All" button only if there are more than 3 items */}

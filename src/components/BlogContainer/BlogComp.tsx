@@ -38,7 +38,7 @@ const BlogComp = ({
       setLoading(true);
       try {
         const response = await fetch(
-          `https://cdn.builder.io/api/v2/content/blogs/${slug}?apiKey=2f632f128c9249388f79d2da77ae0417`
+          `https://cdn.builder.io/api/v2/content/blogs/${slug}?apiKey=2f632f128c9249388f79d2da77ae0417`,
         );
         const data = await response.json();
         setBlogId(data.slug);
@@ -56,18 +56,18 @@ const BlogComp = ({
 
   return (
     <motion.div
-    whileHover={{ scale: 0.95 }}
-    whileTap={{ scale: 0.8 }}
+      whileHover={{ scale: 0.95 }}
+      whileTap={{ scale: 0.8 }}
       className={`blog-comp   flex flex-col justify-between ${className}`}
-     
     >
       <div className="space-y-3 overflow-hidden rounded-lg w-full">
         <Link href={`/blog/${slug}`}>
           {image && (
             <motion.div
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.8 }}
-            className="w-full h-[180px] overflow-hidden rounded-t-lg">
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.8 }}
+              className="w-full h-[180px] overflow-hidden rounded-t-lg"
+            >
               <Image
                 src={image}
                 alt={title}
@@ -79,7 +79,7 @@ const BlogComp = ({
           )}
         </Link>
         <div className="p-4">
-          <h2 className="text-lg text-foreground font-bold text-gray-800 line-clamp-2">
+          <h2 className="text-lg text-foreground font-bold  line-clamp-2">
             {title}
           </h2>
           <p className="text-sm text-foreground  text-gray-600 line-clamp-3 mt-2">
@@ -95,7 +95,9 @@ const BlogComp = ({
           height={32}
           className="w-8 h-8 border border-gray-300 rounded-full"
         />
-        <p className="text-sm text-foreground  font-medium text-gray-600">{authorName}</p>
+        <p className="text-sm text-foreground  font-medium text-gray-600">
+          {authorName}
+        </p>
         <div className="ml-auto flex gap-2 flex-wrap">
           {tag.map((singleTag, index) => (
             <span

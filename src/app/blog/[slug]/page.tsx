@@ -57,18 +57,18 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
       try {
         setLoading(true);
         const response = await fetch(
-          `https://cdn.builder.io/api/v2/content/blogs?apiKey=2f632f128c9249388f79d2da77ae0417`
+          `https://cdn.builder.io/api/v2/content/blogs?apiKey=2f632f128c9249388f79d2da77ae0417`,
         );
         const data = await response.json();
 
         const foundBlog = data.results.find(
-          (item: any) => item.data.slug === slug
+          (item: any) => item.data.slug === slug,
         );
         if (foundBlog) {
           setBlog(foundBlog);
 
           const related = data.results.filter(
-            (item: any) => item.id !== foundBlog.id
+            (item: any) => item.id !== foundBlog.id,
           );
           setRelatedBlogs(related);
         } else {

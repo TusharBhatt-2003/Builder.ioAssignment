@@ -35,7 +35,7 @@ function Header() {
       gsap.fromTo(
         menuRef.current,
         { opacity: 0, y: -20 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
       );
     } else {
       gsap.to(menuRef.current, {
@@ -50,7 +50,7 @@ function Header() {
   return (
     <>
       <NewsLetter />
-      <header className="bg-white bg-background text-foreground container w-full border-b border-zinc-500">
+      <header className="bg-background text-foreground container w-full border-b border-zinc-500">
         <div className="flex py-4 px-5 justify-between items-center">
           {/* Logo Section */}
           <div>
@@ -109,7 +109,7 @@ function Header() {
         {isMenuOpen && (
           <div
             ref={menuRef}
-            className="lg:hidden flex flex-col items-center space-y-4 p-4 bg-white bg-background text-foreground"
+            className="lg:hidden flex flex-col items-center space-y-4 p-4 bg-background text-foreground"
           >
             <NavList />
             <div className="flex items-center gap-5 md:space-y-2">

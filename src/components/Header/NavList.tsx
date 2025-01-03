@@ -33,7 +33,7 @@ const NavList: React.FC = () => {
   const [navItems, setNavItems] = useState<NavItem[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [openDropdownIndex, setOpenDropdownIndex] = useState<number | null>(
-    null
+    null,
   );
 
   useEffect(() => {
@@ -95,7 +95,7 @@ const NavList: React.FC = () => {
 
               {/* Render Dropdown if `subList` exists */}
               {item.subList?.length && openDropdownIndex === index ? (
-                <ul className="absolute  min-w-max mt-2 shadow w-fit p-2 rounded bg-white z-10">
+                <ul className="absolute bg-background text-foreground  min-w-max mt-2 shadow w-fit p-2 rounded  z-10">
                   {item.subList.map((subItem, idx) => (
                     <li key={idx} className="cursor-pointe  py-1">
                       {subItem.reference?.value?.data?.slug ? (
