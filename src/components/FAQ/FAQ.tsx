@@ -16,35 +16,36 @@ interface FAQProps {
 
 const FAQ: React.FC<FAQProps> = ({ items = defaultFAQs }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const answerRefs = useRef<(HTMLParagraphElement | null)[]>([]);
+  const answerRefs = useRef<Map<number, HTMLParagraphElement | null>>(
+    new Map(),
+  );
 
   const toggleAnswer = (index: number) => {
-    if (openIndex === index) {
+    const answer = answerRefs.current.get(index);
+    if (openIndex === index && answer) {
       // Collapse the currently open answer
-      const answer = answerRefs.current[index];
-      if (answer) {
-        gsap.to(answer, {
-          height: 0,
-          opacity: 0,
-          duration: 0.2, // Faster duration
-          ease: "power1.inOut", // Smoother ease
-          onComplete: () => setOpenIndex(null), // Set state after animation
-        });
-      }
+      gsap.to(answer, {
+        height: 0,
+        opacity: 0,
+        duration: 0.2,
+        ease: "power1.inOut",
+        onComplete: () => setOpenIndex(null),
+      });
     } else {
-      setOpenIndex(index); // Open the new answer
+      setOpenIndex(index);
     }
   };
 
   useEffect(() => {
-    if (openIndex !== null && answerRefs.current[openIndex]) {
-      const answer = answerRefs.current[openIndex];
-      // Animate opening the answer with smoother transition
-      gsap.fromTo(
-        answer,
-        { height: 0, opacity: 0 },
-        { height: "auto", opacity: 1, duration: 0.2, ease: "power1.out" }, // Faster and smoother animation
-      );
+    if (openIndex !== null) {
+      const answer = answerRefs.current.get(openIndex);
+      if (answer) {
+        gsap.fromTo(
+          answer,
+          { height: 0, opacity: 0 },
+          { height: "auto", opacity: 1, duration: 0.2, ease: "power1.out" },
+        );
+      }
     }
   }, [openIndex]);
 
@@ -61,7 +62,6 @@ const FAQ: React.FC<FAQProps> = ({ items = defaultFAQs }) => {
               onClick={() => toggleAnswer(index)}
               className="focus:outline-none"
             >
-              {/* Framer Motion Animation on the button */}
               <motion.div
                 whileHover={{ scale: 1.2 }}
                 initial={{ rotate: 0 }}
@@ -78,17 +78,15 @@ const FAQ: React.FC<FAQProps> = ({ items = defaultFAQs }) => {
               </motion.div>
             </button>
           </div>
-          <div
-            style={{
-              overflow: "hidden", // Prevent abrupt resizing
-            }}
-          >
+          <div style={{ overflow: "hidden" }}>
             <p
-              ref={(el) => (answerRefs.current[index] = el)}
+              ref={(el) => {
+                if (el) answerRefs.current.set(index, el);
+              }}
               style={{
                 height: openIndex === index ? "auto" : "0",
                 opacity: openIndex === index ? "1" : "0",
-                transition: "opacity 0.2s ease, height 0.2s ease", // Faster fallback transition
+                transition: "opacity 0.2s ease, height 0.2s ease",
               }}
               className="text-[#B3B3B3] text-xs mt-4"
             >
@@ -101,7 +99,6 @@ const FAQ: React.FC<FAQProps> = ({ items = defaultFAQs }) => {
   );
 };
 
-// Default FAQ items
 const defaultFAQs: FAQItem[] = [
   {
     question: "What is Builder.io?",
