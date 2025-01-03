@@ -141,10 +141,6 @@ Builder.registerComponent(Paragraph, {
   name: "Paragraph",
   inputs: [
     {
-      name: "color",
-      type: "string",
-    },
-    {
       name: "fontSize",
       type: "string",
     },
@@ -377,11 +373,11 @@ Builder.registerComponent(RelatedPosts, {
   name: "RelatedPosts",
   inputs: [
     {
-      name: "reference",
+      name: "refList",
       type: "list",
       subFields: [
         {
-          name: "value",
+          name: "refs",
           type: "reference",
           model: "blog",
           required: true,
@@ -450,3 +446,4 @@ Builder.registerComponent(Social, {
     },
   ],
 });
+

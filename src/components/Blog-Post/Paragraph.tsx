@@ -12,17 +12,15 @@ interface ParagraphProps {
 const Paragraph: React.FC<ParagraphProps> = ({
   text,
   fontSize = "16px",
-  color = "black",
   lineHeight = "1.5",
 }) => {
   return (
     <p
       style={{
         fontSize,
-        color,
         lineHeight,
       }}
-      className="mx-10 my-5"
+      className="mx-10 my-5 bg-background text-foreground"
     >
       {text}
     </p>

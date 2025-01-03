@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+    box-sizing: border-box; 
+    scroll-margin: none;
+}
+
+:root {
+    --background: #ffffff;
+    --foreground: #000000;
+  }
+  
+  .dark {
+    --background: #121212;
+    --foreground: #ffffff;
+  }
+  
+
+
+/* Hide scroll bar for Chrome, Edge, Safari */
+html {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Edge, Safari */
+}

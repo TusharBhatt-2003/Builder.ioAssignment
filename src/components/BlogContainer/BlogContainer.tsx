@@ -111,8 +111,8 @@ const BlogContainer = () => {
   const totalPages = Math.ceil(filteredBlogs.length / blogsPerPage);
 
   return (
-    <div className="grid place-content-center">
-      <div className="flex w-full items-center justify-center md:justify-between md:mx-10">
+    <div className="grid md:container   place-content-center">
+      <div className="flex w-full items-center justify-center md:justify-between py-10">
         <Category
           categories={categories}
           setSelectedCategory={setSelectedCategory}
@@ -124,12 +124,13 @@ const BlogContainer = () => {
       </div>
 
       {/* Blog List */}
-      <div className="mx-5 justify-center items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
+      <div className="justify-center my-10 items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
         {filteredBlogs.length === 0 ? (
           <div className="col-span-full text-center">No blogs available.</div>
         ) : (
           paginateBlogs(filteredBlogs, currentPage).map((blog) => (
             <BlogComp
+            className="min-h-[400px] bg-background text-foreground mx-w-[320px]"
               key={blog.id}
               image={blog.data.blogcardimage}
               title={blog.data.title}

@@ -13,7 +13,7 @@ export default function Search({ setSearchQuery }: SearchProps) {
         type="text"
         placeholder="Search..."
         onChange={(e) => setSearchQuery(e.target.value)} // Update the search query on input change
-        className="px-3 outline-none placeholder:text-gray-500 w-full"
+        className="px-3 outline-none bg-background text-foreground placeholder:text-gray-500 w-full"
       />
       <Image src="/filter.svg" alt="filter" width="25" height="25" />
     </div>

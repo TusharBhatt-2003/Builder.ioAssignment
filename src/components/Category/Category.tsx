@@ -47,7 +47,7 @@ const Category: React.FC<CategoryProps> = ({
                   e.preventDefault();
                   handleCategoryClick(item.category, index);
                 }}
-                className="transition-colors duration-200"
+                className="transition-colors text-foreground  duration-200"
               >
                 {item.category}
               </a>

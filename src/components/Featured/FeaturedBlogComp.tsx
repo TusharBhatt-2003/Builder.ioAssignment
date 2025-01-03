@@ -1,8 +1,7 @@
-import { Builder } from "@builder.io/react";
+import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-
 type FeaturedBlogCompProp = {
   imageSrc: string;
   category: string;
@@ -22,7 +21,9 @@ const FeaturedBlogComp: React.FC<FeaturedBlogCompProp> = ({
   slug,
 }) => {
   return (
-    <div className="max-w-sm w-full h-full md:w-[25vw] flex flex-col justify-between  bg-white rounded-lg overflow-hidden">
+    <motion.div
+    whileHover={{ scale: 1.1 }}
+    className="max-w-sm w-full bg-background text-foreground h-full md:w-[25vw] flex flex-col justify-between  bg-white rounded-lg overflow-hidden">
       <div>
         <div className="h-48">
           <Image
@@ -36,17 +37,20 @@ const FeaturedBlogComp: React.FC<FeaturedBlogCompProp> = ({
         <div className="p-4 h-full flex flex-col">
           <div>
             <div className="flex items-center space-x-2 mb-2">
-              <span className="px-2 py-1 text-xs font-semibold text-white bg-teal-500 rounded">
+              <span className="px-2 py-1 text-xs font-semibold  text-white bg-teal-500 rounded">
                 {category}
               </span>
-              <span className="text-sm font-semibold text-black">{time}</span>
+              <span className="text-sm bg-background text-foreground font-semibold text-black">{time}</span>
             </div>
-            <h2 className="text-sm font-bold text-black mb-2">{title}</h2>
-            <p className="text-xs text-gray-600 mb-4">{description}</p>
+            <h2 className="text-sm bg-background text-foreground font-bold text-black mb-2">{title}</h2>
+            <p className="text-xs bg-background text-foreground text-gray-600 mb-4">{description}</p>
           </div>
         </div>
       </div>
-      <div className="flex pb-5 pl-5 gap-2">
+      <motion.div
+         whileHover={{ scale: 1.05 }}
+         whileTap={{ scale: 0.9 }} 
+         className="flex pb-5 pl-5 gap-2">
         <Link
           href={`/blog/${slug}`}
           className="text-teal-500 text-sm underline font-semibold flex items-center hover:underline"
@@ -54,8 +58,8 @@ const FeaturedBlogComp: React.FC<FeaturedBlogCompProp> = ({
           Read more
         </Link>
         <Image alt="redirect" src="/arrowIcon.svg" width="10" height="10" />
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

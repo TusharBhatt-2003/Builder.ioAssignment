@@ -1,18 +1,56 @@
 "use client";
-import { useState } from "react";
+
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { GiHamburgerMenu } from "react-icons/gi"; // Import Hamburger Icon
+import { gsap } from "gsap";
 import NewsLetter from "./NewsLetter";
 import NavList from "./NavList";
+import { motion } from "framer-motion";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  // Toggle dark mode
+  const toggleDarkMode = () => {
+    setIsDarkMode((prev) => !prev);
+  };
+
+  // Apply dark mode class to the HTML element
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isDarkMode) {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+  }, [isDarkMode]);
+
+  // GSAP animation for the menu
+  useEffect(() => {
+    if (isMenuOpen) {
+      gsap.fromTo(
+        menuRef.current,
+        { opacity: 0, y: -20 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }
+      );
+    } else {
+      gsap.to(menuRef.current, {
+        opacity: 0,
+        y: -20,
+        duration: 0.3,
+        ease: "power3.in",
+      });
+    }
+  }, [isMenuOpen]);
 
   return (
     <>
       <NewsLetter />
-      <header className="bg-white w-full border-b border-zinc-500">
+      <header className="bg-white bg-background text-foreground container w-full border-b border-zinc-500">
         <div className="flex py-4 px-5 justify-between items-center">
           {/* Logo Section */}
           <div>
@@ -22,7 +60,7 @@ function Header() {
           </div>
 
           {/* Hamburger Icon for Mobile */}
-          <div className="md:hidden flex items-center">
+          <div className="lg:hidden flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle Navigation"
@@ -31,48 +69,77 @@ function Header() {
             </button>
           </div>
 
-          <div className="hidden md:flex gap-5">
+          <div className="hidden lg:flex gap-5">
             <NavList />
           </div>
 
           {/* Buttons Section */}
-          <div className="hidden md:flex items-center space-x-2">
-            <button className="border-2 border-[#00C7BE] text-[#00C7BE] px-4 py-3 rounded-lg capitalize">
+          <div className="hidden lg:flex items-center space-x-2">
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.8 }}
+              className="border-2 border-[#00C7BE] text-[#00C7BE] px-4 py-3 rounded-lg capitalize"
+            >
               login
-            </button>
-            <button className="bg-[#00C7BE] border-2 border-[#00C7BE] text-white px-4 py-3 rounded-lg capitalize">
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.8 }}
+              className="bg-[#00C7BE] border-2 border-[#00C7BE] text-white px-4 py-3 rounded-lg capitalize"
+            >
               register now
-            </button>
-            <button className="border-2 p-2 rounded-lg border-black">
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.8 }}
+              onClick={toggleDarkMode}
+              className="border-2 p-2 rounded-lg border-black dark:border-white"
+            >
               <Image
-                src="/dark_mode.svg"
+                src={isDarkMode ? "/light_mode.svg" : "/dark_mode.svg"}
                 alt="lightDark mode"
                 width="20"
                 height="20"
               />
-            </button>
+            </motion.button>
           </div>
         </div>
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden flex flex-col items-center space-y-4 p-4 bg-white">
+          <div
+            ref={menuRef}
+            className="lg:hidden flex flex-col items-center space-y-4 p-4 bg-white bg-background text-foreground"
+          >
             <NavList />
-            <div className="flex md:flex-col items-center gap-5 md:space-y-2">
-              <button className="border-2 border-[#00C7BE] text-[#00C7BE] px-4 py-3 rounded-lg capitalize">
+            <div className="flex items-center gap-5 md:space-y-2">
+              <motion.button
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.8 }}
+                className="border-2 border-[#00C7BE] text-[#00C7BE] px-4 py-3 rounded-lg capitalize"
+              >
                 login
-              </button>
-              <button className="bg-[#00C7BE] border-2 border-[#00C7BE] text-white px-4 py-3 rounded-lg capitalize">
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.8 }}
+                className="bg-[#00C7BE] border-2 border-[#00C7BE] text-white px-4 py-3 rounded-lg capitalize"
+              >
                 register now
-              </button>
-              <button className="border-2 p-2 rounded-lg border-black">
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.8 }}
+                onClick={toggleDarkMode}
+                className="border-2 p-2 rounded-lg border-black dark:border-white"
+              >
                 <Image
-                  src="/dark_mode.svg"
+                  src={isDarkMode ? "/light_mode.svg" : "/dark_mode.svg"}
                   alt="lightDark mode"
                   width="20"
                   height="20"
                 />
-              </button>
+              </motion.button>
             </div>
           </div>
         )}

@@ -95,13 +95,13 @@ const NavList: React.FC = () => {
 
               {/* Render Dropdown if `subList` exists */}
               {item.subList?.length && openDropdownIndex === index ? (
-                <ul className="absolute mt-2 border px-5 py-2 rounded bg-white shadow-lg z-10">
+                <ul className="absolute  min-w-max mt-2 shadow w-fit p-2 rounded bg-white z-10">
                   {item.subList.map((subItem, idx) => (
-                    <li key={idx} className="p-1 cursor-pointe">
+                    <li key={idx} className="cursor-pointe  py-1">
                       {subItem.reference?.value?.data?.slug ? (
                         <a
                           href={`/blog/${subItem.reference.value.data.slug}`}
-                          className="hover:underline cursor-pointer"
+                          className="hover:underline p-2 cursor-pointer"
                           aria-label={`Navigate to ${subItem.label || "Page"}`}
                         >
                           {subItem.label || "Untitled"}

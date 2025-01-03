@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const Social = ({
   authorname,
@@ -43,11 +46,14 @@ const Social = ({
       </div>
       <div className="flex gap-3">
         {link && (
-          <a
+          <motion.a
             href={link}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-blue-500"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2 }}
           >
             <Image
               height="40"
@@ -55,14 +61,17 @@ const Social = ({
               src={profileImage}
               alt="Profile Link"
             />
-          </a>
+          </motion.a>
         )}
         {x && (
-          <a
+          <motion.a
             href={x}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-blue-500"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2 }}
           >
             <Image
               height="40"
@@ -70,14 +79,17 @@ const Social = ({
               src={twitterImage}
               alt="Twitter Link"
             />
-          </a>
+          </motion.a>
         )}
         {linkedin && (
-          <a
+          <motion.a
             href={linkedin}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-blue-500"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2 }}
           >
             <Image
               height="40"
@@ -85,14 +97,17 @@ const Social = ({
               src={linkedinImage}
               alt="LinkedIn Link"
             />
-          </a>
+          </motion.a>
         )}
         {facebook && (
-          <a
+          <motion.a
             href={facebook}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-blue-500"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2 }}
           >
             <Image
               height="40"
@@ -100,7 +115,7 @@ const Social = ({
               src={facebookImage}
               alt="Facebook Link"
             />
-          </a>
+          </motion.a>
         )}
       </div>
     </div>

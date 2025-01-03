@@ -13,7 +13,6 @@ interface BlogData {
   category: string;
   casestudy: boolean;
   slug: string;
-  feature: boolean;
   value: {
     value: {
       data: BlogData;
@@ -35,21 +34,33 @@ const Featured: React.FC<FeaturedProps> = ({ reference }) => {
   const blogsToDisplay = showAll ? reference : reference.slice(0, 3);
 
   return (
-    <div className="grid bg-[#F1F1F3] justify-center items-center px-5">
-      <div className="w-full py-10 justify-center items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
+    <div className="grid bg-background text-foreground  bg-[#F1F1F3] justify-center items-center px-5">
+      <div className="w-full container py-10 justify-center items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
         {/* Map over the blogs to display and render FeaturedBlogComp */}
-        {blogsToDisplay.map((ref, index) => (
+        {blogsToDisplay.map((ref, index) => {
+ const featuredData = ref.value?.value?.data;
+
+   // Handle cases where data is not available
+   if (!featuredData) {
+    return (
+      <div key={index} className="bg-[#F1F1F3] p-5">
+        <p className="text-gray-500">Invalid featuredData</p>
+      </div>
+    );
+  }
+          return (
           <FeaturedBlogComp
             key={index}
-            imageSrc={ref.value.value.data.blogcardimage}
-            category={ref.value.value.data.category}
-            time={ref.value.value.data.read}
-            title={ref.value.value.data.title}
-            description={ref.value.value.data.desc}
-            slug={ref.value.value.data.slug}
-            link={`/blogs/${ref.value.value.data.slug}`}
-          />
-        ))}
+            imageSrc={featuredData.blogcardimage}
+            category={featuredData.category}
+            time={featuredData.read}
+            title={featuredData.title}
+            description={featuredData.desc}
+            slug={featuredData.slug}
+            link={`/blogs/${featuredData.slug}`}
+          />)
+})}
+
       </div>
 
       {/* Show "View All" button only if there are more than 3 items */}

@@ -7,7 +7,7 @@ export default function CTA() {
       className="w-full bg-cover bg-center flex justify-center items-center my-5 "
       style={{ backgroundImage: `url('/footerUp.jpeg')` }}
     >
-      <form className="bg-white m-10 p-5 md:p-10 rounded-lg flex gap-5 md:gap-12 flex-col justify-center items-center">
+      <form className="bg-white bg-background text-foreground m-10 p-5 md:p-10 rounded-lg flex gap-5 md:gap-12 flex-col justify-center items-center">
         <div className="w-[85%] md:w-[70%] space-y-5">
           <h1 className="font-bold text-xl md:text-3xl">
             Schedule Your Consultation Today
@@ -30,7 +30,7 @@ export default function CTA() {
                 type="email"
                 required
                 placeholder="Enter your email"
-                className="placeholder:text-sm 0 outline-none w-fit md:w-full placeholder:text-[#B3B3B3]"
+                className="placeholder:text-sm 0 outline-none w-fit md:w-full placeholder:text-[#B3B3B3] bg-background text-foreground"
               />
             </div>
             <button

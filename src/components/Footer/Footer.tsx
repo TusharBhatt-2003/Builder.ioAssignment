@@ -4,9 +4,9 @@ import FooterBottom from "./FooterBottom";
 
 export default function Footer() {
   return (
-    <>
+    <div className="container"> 
       <FooterUpper />
       <FooterBottom />
-    </>
+    </div>
   );
 }
