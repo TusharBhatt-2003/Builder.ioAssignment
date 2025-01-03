@@ -36,7 +36,7 @@ const RelatedPosts: React.FC<RelatedPostsProps> = ({ refList }) => {
       <h1 className="text-4xl py-5 bg-background text-foreground font-bold">
         Related Posts
       </h1>
-      <div className="w-full flex flex-col justify-center items-center gap-5">
+      <div className="flex flex-col w-full justify-center items-center gap-5">
         {refList.map((ref, index) => {
           const data = ref.refs?.value?.data;
 
