@@ -1,7 +1,6 @@
 "use client";
 import { builder, Builder } from "@builder.io/react";
 import BlogContainer from "./components/BlogContainer/BlogContainer";
-import BlogImage from "./components/Blog-Post/BlogImage";
 import BlogList from "./components/Blog-Post/BlogList";
 import EmailSubmition from "./components/Blog-Post/EmailSubmition";
 import FAQ from "./components/FAQ/FAQ";
@@ -86,25 +85,24 @@ Builder.registerComponent(Testimony, {
 Builder.registerComponent(BlogContainer, {
   name: "BlogContainer",
 });
-
-Builder.registerComponent(BlogImage, {
-  name: "BlogImage",
-  inputs: [
-    {
-      name: "altText",
-      type: "string",
-    },
-    {
-      name: "imageFile",
-      type: "object",
-      hideFromUI: true,
-      meta: {
-        ts: "File",
-      },
-      required: true,
-    },
-  ],
-});
+// Builder.registerComponent(Image, {
+//   name: "BlogImage",
+//   inputs: [
+//     {
+//       name: "altText",
+//       type: "string",
+//     },
+//     {
+//       name: "imageFile",
+//       type: "object",
+//       hideFromUI: true,
+//       meta: {
+//         ts: "File",
+//       },
+//       required: true,
+//     },
+//   ],
+// });
 
 Builder.registerComponent(Heading, {
   name: "Heading",
@@ -128,25 +126,6 @@ Builder.registerComponent(Heading, {
       type: "string",
       enum: ["2xl", "3xl", "4xl", "5xl", "6xl", "lg", "md", "sm", "xl", "xs"],
       required: true,
-    },
-    {
-      name: "text",
-      type: "string",
-      required: true,
-    },
-  ],
-});
-
-Builder.registerComponent(Paragraph, {
-  name: "Paragraph",
-  inputs: [
-    {
-      name: "fontSize",
-      type: "string",
-    },
-    {
-      name: "lineHeight",
-      type: "string",
     },
     {
       name: "text",
@@ -301,51 +280,14 @@ Builder.registerComponent(BlogList, {
   inputs: [
     {
       name: "items",
-      type: "object",
-      hideFromUI: true,
-      meta: {
-        ts: "string[]",
-      },
-      required: true,
-    },
-  ],
-});
-
-Builder.registerComponent(BlogImage, {
-  name: "BlogImage",
-  inputs: [
-    {
-      name: "imageFile",
-      type: "file", // File picker for image
-      allowedFileTypes: ["jpg", "jpeg", "png", "webp", "gif"], // Restrict file types
-      required: true,
-      helperText: "Upload an image file (e.g., jpg, png, webp, gif).",
-    },
-    {
-      name: "altText",
-      type: "string",
-      defaultValue: "Image description",
-    },
-  ],
-});
-
-Builder.registerComponent(BlogList, {
-  name: "BlogList",
-  inputs: [
-    {
-      name: "item1",
-      type: "string", // Input for first item
-      helperText: "Enter list item 1",
-    },
-    {
-      name: "item2",
-      type: "string", // Input for second item
-      helperText: "Enter list item 2",
-    },
-    {
-      name: "item3",
-      type: "string", // Input for third item
-      helperText: "Enter list item 3",
+      type: "list", // Input for a list of items
+      subFields: [
+        {
+          name: "listItem",
+          type: "text",
+          required: false,
+        },
+      ],
     },
   ],
 });

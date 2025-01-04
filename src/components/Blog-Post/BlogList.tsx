@@ -1,19 +1,24 @@
 "use client";
+
 interface BlogListProps {
-  item1?: string;
-  item2?: string;
-  item3?: string;
+  items?: string[]; // Accepting an array of strings for items
+  listItem?: string[][]; // Accepting an array of arrays of strings for sublists, corresponding to each item
 }
 
-const BlogList: React.FC<BlogListProps> = ({ item1, item2, item3 }) => {
-  const items = [item1, item2, item3].filter(Boolean);
+const BlogList = ({ items }: { items: { listItem: string }[] }) => {
   return (
-    <div className="space-y-2 mx-10 my-5 pl-10 py-5 rounded-lg bg-background text-foreground bg-[#F1F1F3]">
-      <ul className="list-disc">
-        {items.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
-      </ul>
+    <div className="bg-[#F1F1F3] dark:bg-[#1f1f1f] text-foreground  rounded-lg p-5">
+      {items && items.length > 0 ? (
+        <ul className="list-disc mx-5">
+          {items.map((item, index) => (
+            <li className="p-1" key={index}>
+              {item.listItem}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No blog items available.</p>
+      )}
     </div>
   );
 };

@@ -23,8 +23,9 @@ export default function CTA() {
               <Image
                 src="/mail.svg"
                 alt="enter your email"
-                width="25"
-                height="25"
+                width={25}
+                height={25}
+                className="h-auto w-auto"
               />
               <input
                 type="email"

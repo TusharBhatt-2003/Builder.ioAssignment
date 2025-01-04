@@ -22,7 +22,7 @@ const EmailSubmition: React.FC<EmailSubmitionProps> = ({
           type="email"
           required
           placeholder={placeholder}
-          className="bg-[#E4E4E7] outline-none rounded-l-lg p-5 placeholder:text-[#595959]"
+          className="bg-[#E4E4E7] dark:bg-[#2f2f2f] outline-none rounded-l-lg p-5 placeholder:text-[#595959]"
         />
         <button
           type="submit"

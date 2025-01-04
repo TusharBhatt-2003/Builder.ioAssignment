@@ -58,7 +58,7 @@ const BlogComp = ({
   return (
     <motion.div
       whileHover={{
-        scale: 0.9,
+        scale: 0.89,
         boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
       }}
       whileTap={{ scale: 0.95 }}
@@ -67,27 +67,27 @@ const BlogComp = ({
       <div className="space-y-3 overflow-hidden rounded-lg w-full">
         <Link href={`/blog/${slug}`}>
           {image && (
-            <motion.div
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="overflow-hidden rounded-lg"
-            >
-              <div className="relative w-full aspect-square">
+            <div className="overflow-hidden rounded-lg">
+              <motion.div
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.9 }}
+                className="relative w-full aspect-square"
+              >
                 <Image
                   src={image}
                   alt={title}
                   fill
                   className="object-cover rounded-lg"
                 />
-              </div>
-            </motion.div>
+              </motion.div>
+            </div>
           )}
         </Link>
         <div className="p-4">
           <h2 className="text-lg text-foreground font-bold line-clamp-2">
             {title}
           </h2>
-          <p className="text-sm text-foreground text-gray-600 line-clamp-3 mt-2">
+          <p className="text-sm dark:text-gray-300 text-gray-600 line-clamp-3 mt-2">
             {description}
           </p>
         </div>
@@ -100,7 +100,7 @@ const BlogComp = ({
           height={32}
           className="w-8 h-8 border border-gray-300 rounded-full"
         />
-        <p className="text-sm text-foreground font-medium text-gray-600">
+        <p className="text-sm dark:text-white font-medium text-gray-600">
           {authorName}
         </p>
         <div className="ml-auto flex gap-2 flex-wrap">
@@ -113,7 +113,7 @@ const BlogComp = ({
             </span>
           ))}
         </div>
-        <p className="text-xs text-foreground text-gray-500">{time}</p>
+        <p className="text-xs dark:text-gray-300 text-gray-500">{time}</p>
       </div>
     </motion.div>
   );

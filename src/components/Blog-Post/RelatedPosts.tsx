@@ -2,29 +2,29 @@ import React from "react";
 import BlogComp from "../BlogContainer/BlogComp";
 
 interface BlogData {
-  title: string;
-  desc: string;
-  authorname: string;
-  authoravatar: string;
-  blogcardimage: string;
-  tag: string[];
-  read: string;
-  category: string;
-  casestudy: boolean;
-  slug: string;
-}
-
-interface BlogsData {
   heading: string;
   refs: {
-    value: {
-      data: BlogData;
-    } | null;
-  } | null;
+    value:
+      | {
+          data: {
+            title: string;
+            desc: string;
+            authorname: string;
+            authoravatar: string;
+            blogcardimage: string;
+            tag: string[];
+            read: string;
+            category: string;
+            casestudy: boolean;
+            slug: string;
+          };
+        }[]
+      | null; // Making value nullable to account for missing data
+  };
 }
 
 interface RelatedPostsProps {
-  refList: BlogsData[] | null;
+  refList: BlogData[] | null;
 }
 
 const RelatedPosts: React.FC<RelatedPostsProps> = ({ refList }) => {
@@ -59,7 +59,7 @@ const RelatedPosts: React.FC<RelatedPostsProps> = ({ refList }) => {
 
           return (
             <BlogComp
-              className="bg-[#F1F1F3] bg-background w-full rounded-lg px-3"
+              className="bg-[#F1F1F3] dark:bg-[#212121] w-full rounded-lg px-3"
               key={index}
               image={""} // Default to empty string if no image
               title={refData.title || "Untitled"}

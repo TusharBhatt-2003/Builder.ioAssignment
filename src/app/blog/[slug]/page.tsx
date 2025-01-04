@@ -108,7 +108,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
       />
 
       {/* Blog Body */}
-      <div className="w-full h-full">
+      <div className="w-full container h-full">
         <RenderBuilderContent content={blog} model="blogs" />
       </div>
     </div>

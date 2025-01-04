@@ -50,7 +50,7 @@ function Header() {
   return (
     <div className="fixed  top-0 right-0 left-0 z-50">
       <NewsLetter />
-      <header className=" bg-background text-foreground container w-full border-b border-zinc-500 ">
+      <header className=" bg-background text-foreground  w-full border-b border-zinc-500 ">
         <div className="flex py-4 px-5 justify-between items-center">
           {/* Logo Section */}
           <div>
