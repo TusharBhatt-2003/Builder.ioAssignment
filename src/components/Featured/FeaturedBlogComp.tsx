@@ -26,13 +26,13 @@ const FeaturedBlogComp: React.FC<FeaturedBlogCompProp> = ({
       className="max-w-sm w-full bg-background  h-full md:w-[25vw] flex flex-col justify-between   rounded-lg overflow-hidden"
     >
       <div>
-        <div className="h-48">
+        <div className="h-56 flex justify-center items-center rounded-lg  bg-center overflow-hidden">
           <Image
-            width="100"
-            height="100"
+            width={300}
+            height={100}
             src={imageSrc}
             alt={title}
-            className="object-cover rounded-lg w-full h-full"
+            className="object-cover aspect-square rounded-lg w-auto h-auto"
           />
         </div>
         <div className="p-4 h-full flex flex-col">
@@ -65,7 +65,13 @@ const FeaturedBlogComp: React.FC<FeaturedBlogCompProp> = ({
         >
           Read more
         </Link>
-        <Image alt="redirect" src="/arrowIcon.svg" width="10" height="10" />
+        <Image
+          alt="redirect"
+          src="/arrowIcon.svg"
+          width={10}
+          height={10}
+          className="w-auto h-auto"
+        />
       </motion.div>
     </motion.div>
   );

@@ -3,42 +3,46 @@ import React, { useState } from "react";
 import FeaturedBlogComp from "./FeaturedBlogComp";
 
 interface BlogData {
-  title: string;
-  desc: string;
-  authorname: string;
-  authoravatar: string;
-  blogcardimage: string;
-  tag: string[];
-  read: string;
-  category: string;
-  casestudy: boolean;
-  slug: string;
-  value: {
-    value: {
-      data: BlogData;
-    };
+  refs: {
+    value:
+      | {
+          data: {
+            title: string;
+            desc: string;
+            authorname: string;
+            authoravatar: string;
+            blogcardimage: string;
+            tag: string[];
+            read: string;
+            category: string;
+            casestudy: boolean;
+            slug: string;
+          };
+        }[]
+      | null; // Making value nullable to account for missing data
   };
 }
 
 interface FeaturedProps {
-  reference: BlogData[];
+  refList: BlogData[];
 }
 
-const Featured: React.FC<FeaturedProps> = ({ reference }) => {
+const Featured: React.FC<FeaturedProps> = ({ refList }) => {
   const [showAll, setShowAll] = useState(false);
 
-  if (!reference || reference.length === 0) {
+  if (!refList || refList.length === 0) {
     return <div>No references available.</div>;
   }
 
-  const blogsToDisplay = showAll ? reference : reference.slice(0, 3);
+  const blogsToDisplay = showAll ? refList : refList.slice(0, 3);
 
   return (
-    <div className="grid bg-background text-foreground  bg-[#F1F1F3] justify-center items-center px-5">
+    <div className="grid bg-background text-foreground bg-[#F1F1F3] justify-center items-center px-5">
       <div className="w-full container py-10 justify-center items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
         {/* Map over the blogs to display and render FeaturedBlogComp */}
         {blogsToDisplay.map((ref, index) => {
-          const featuredData = ref.value?.value?.data;
+          // Using optional chaining and nullish coalescing to handle missing data
+          const featuredData = ref.refs?.value?.data ?? null;
 
           // Handle cases where data is not available
           if (!featuredData) {
@@ -48,6 +52,7 @@ const Featured: React.FC<FeaturedProps> = ({ reference }) => {
               </div>
             );
           }
+
           return (
             <FeaturedBlogComp
               key={index}
@@ -64,7 +69,7 @@ const Featured: React.FC<FeaturedProps> = ({ reference }) => {
       </div>
 
       {/* Show "View All" button only if there are more than 3 items */}
-      {reference.length > 3 && (
+      {refList.length > 3 && (
         <div className="text-center m-8">
           <button
             onClick={() => setShowAll(!showAll)}

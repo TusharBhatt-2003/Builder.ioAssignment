@@ -96,7 +96,6 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
   if (!blog) {
     return <div>Blog not found.</div>;
   }
-
   return (
     <div className="p-5 py-20 w-full">
       {/* Blog Header */}

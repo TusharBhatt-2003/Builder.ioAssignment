@@ -375,6 +375,29 @@ Builder.registerComponent(RelatedPosts, {
     {
       name: "refList",
       type: "list",
+      required: true,
+      subFields: [
+        {
+          name: "refs",
+          type: "reference",
+          model: "blog",
+          required: true,
+        },
+        {
+          name: "heading",
+          type: "string",
+        },
+      ],
+    },
+  ],
+});
+
+Builder.registerComponent(Featured, {
+  name: "Featured",
+  inputs: [
+    {
+      name: "refList",
+      type: "list",
       subFields: [
         {
           name: "refs",
@@ -387,62 +410,12 @@ Builder.registerComponent(RelatedPosts, {
   ],
 });
 
-Builder.registerComponent(Featured, {
-  name: "Featured",
-  inputs: [
-    {
-      name: "reference",
-      type: "list",
-      subFields: [
-        {
-          name: "value",
-          type: "reference",
-          model: "blog",
-          required: true,
-        },
-      ],
-    },
-  ],
-});
-
 Builder.registerComponent(Social, {
   name: "Social",
   inputs: [
-    {
-      name: "authoravatar",
-      type: "file",
-      required: true,
-    },
-    {
-      name: "authorname",
-      type: "string",
-      required: true,
-    },
-    {
-      name: "category",
-      type: "string",
-      required: true,
-    },
-    {
-      name: "date",
-      type: "string",
-      required: true,
-    },
-    {
-      name: "facebook",
-      type: "string",
-    },
-    {
-      name: "link",
-      type: "string",
-    },
-    {
-      name: "linkedin",
-      type: "string",
-    },
-    {
-      name: "x",
-      type: "string",
-    },
+    { name: "link", type: "url", defaultValue: "http://" },
+    { name: "x", type: "url", defaultValue: "http://" },
+    { name: "linkedin", type: "url", defaultValue: "http://" },
+    { name: "facebook", type: "url", defaultValue: "http://" },
   ],
 });

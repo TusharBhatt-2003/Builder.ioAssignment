@@ -48,14 +48,20 @@ function Header() {
   }, [isMenuOpen]);
 
   return (
-    <>
+    <div className="fixed  top-0 right-0 left-0 z-50">
       <NewsLetter />
-      <header className="bg-background text-foreground container w-full border-b border-zinc-500">
+      <header className=" bg-background text-foreground container w-full border-b border-zinc-500 ">
         <div className="flex py-4 px-5 justify-between items-center">
           {/* Logo Section */}
           <div>
             <Link href="/home">
-              <Image src="/logo.svg" alt="logo" width="85" height="85" />
+              <Image
+                src="/logo.svg"
+                alt="logo"
+                width={100}
+                height={100}
+                className="h-auto w-auto"
+              />
             </Link>
           </div>
 
@@ -144,7 +150,7 @@ function Header() {
           </div>
         )}
       </header>
-    </>
+    </div>
   );
 }
 

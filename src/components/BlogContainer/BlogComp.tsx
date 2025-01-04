@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
+
 interface Author {
   name: string;
   image: string;
@@ -56,33 +57,37 @@ const BlogComp = ({
 
   return (
     <motion.div
-      whileHover={{ scale: 0.95 }}
-      whileTap={{ scale: 0.8 }}
-      className={`blog-comp   flex flex-col justify-between ${className}`}
+      whileHover={{
+        scale: 0.9,
+        boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
+      }}
+      whileTap={{ scale: 0.95 }}
+      className={`blog-comp flex flex-col justify-between transition-all rounded-lg duration-300 ${className}`}
     >
       <div className="space-y-3 overflow-hidden rounded-lg w-full">
         <Link href={`/blog/${slug}`}>
           {image && (
             <motion.div
               whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.8 }}
-              className="w-full h-[180px] overflow-hidden rounded-t-lg"
+              whileTap={{ scale: 0.9 }}
+              className="overflow-hidden rounded-lg"
             >
-              <Image
-                src={image}
-                alt={title}
-                width={320}
-                height={180}
-                className="object-cover w-full h-full cursor-pointer"
-              />
+              <div className="relative w-full aspect-square">
+                <Image
+                  src={image}
+                  alt={title}
+                  fill
+                  className="object-cover rounded-lg"
+                />
+              </div>
             </motion.div>
           )}
         </Link>
         <div className="p-4">
-          <h2 className="text-lg text-foreground font-bold  line-clamp-2">
+          <h2 className="text-lg text-foreground font-bold line-clamp-2">
             {title}
           </h2>
-          <p className="text-sm text-foreground  text-gray-600 line-clamp-3 mt-2">
+          <p className="text-sm text-foreground text-gray-600 line-clamp-3 mt-2">
             {description}
           </p>
         </div>
@@ -95,7 +100,7 @@ const BlogComp = ({
           height={32}
           className="w-8 h-8 border border-gray-300 rounded-full"
         />
-        <p className="text-sm text-foreground  font-medium text-gray-600">
+        <p className="text-sm text-foreground font-medium text-gray-600">
           {authorName}
         </p>
         <div className="ml-auto flex gap-2 flex-wrap">
@@ -108,7 +113,7 @@ const BlogComp = ({
             </span>
           ))}
         </div>
-        <p className="text-xs text-foreground  text-gray-500">{time}</p>
+        <p className="text-xs text-foreground text-gray-500">{time}</p>
       </div>
     </motion.div>
   );

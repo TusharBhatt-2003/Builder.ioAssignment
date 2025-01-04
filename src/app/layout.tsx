@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import CTA from "@/components/CTA/CTA";
+import { BlogProvider } from "./blog/[slug]/BlogContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +32,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
         <Header />
-        {children}
+        <main className="mt-20">
+          <BlogProvider>{children}</BlogProvider>
+        </main>
         <CTA />
         <Footer />
       </body>

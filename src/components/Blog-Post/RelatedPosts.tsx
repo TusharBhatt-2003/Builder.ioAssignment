@@ -1,28 +1,30 @@
-"use client";
 import React from "react";
 import BlogComp from "../BlogContainer/BlogComp";
 
 interface BlogData {
+  title: string;
+  desc: string;
+  authorname: string;
+  authoravatar: string;
+  blogcardimage: string;
+  tag: string[];
+  read: string;
+  category: string;
+  casestudy: boolean;
+  slug: string;
+}
+
+interface BlogsData {
+  heading: string;
   refs: {
     value: {
-      data: {
-        title: string;
-        desc: string;
-        authorname: string;
-        authoravatar: string;
-        blogcardimage: string;
-        tag: string[];
-        read: string;
-        category: string;
-        casestudy: boolean;
-        slug: string;
-      };
-    };
-  };
+      data: BlogData;
+    } | null;
+  } | null;
 }
 
 interface RelatedPostsProps {
-  refList?: BlogData[] | null;
+  refList: BlogsData[] | null;
 }
 
 const RelatedPosts: React.FC<RelatedPostsProps> = ({ refList }) => {
@@ -39,12 +41,17 @@ const RelatedPosts: React.FC<RelatedPostsProps> = ({ refList }) => {
       </h1>
       <div className="w-full flex flex-col justify-center items-center gap-5">
         {refList.map((ref, index) => {
-          const data = ref.refs?.value?.data;
+          // Check if ref.refs is valid and ref.refs.value is available
+          const refData = ref.refs?.value?.data;
 
-          // Handle cases where data is not available
-          if (!data) {
+          // Fallback for missing data
+          const refHeading = ref.heading || "No title available";
+
+          if (!refData) {
+            // If no valid data, show a fallback message
             return (
               <div key={index} className="bg-[#F1F1F3] p-5">
+                <p>{refHeading}</p>
                 <p className="text-gray-500">Invalid ref data</p>
               </div>
             );
@@ -54,16 +61,16 @@ const RelatedPosts: React.FC<RelatedPostsProps> = ({ refList }) => {
             <BlogComp
               className="bg-[#F1F1F3] bg-background w-full rounded-lg px-3"
               key={index}
-              image={""}
-              title={data.title || "Untitled"}
-              description={data.desc || "No description available"}
+              image={""} // Default to empty string if no image
+              title={refData.title || "Untitled"}
+              description={refData.desc || "No description available"}
               author={{
-                name: data.authorname || "Anonymous",
-                image: data.authoravatar || "",
+                name: refData.authorname || "Anonymous",
+                image: refData.authoravatar || "",
               }}
-              tag={data.tag || []}
-              time={data.read || "N/A"}
-              slug={data.slug || "#"}
+              tag={refData.tag || []}
+              time={refData.read || "N/A"}
+              slug={refData.slug || "#"}
             />
           );
         })}

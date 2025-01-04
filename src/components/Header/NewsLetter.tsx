@@ -52,7 +52,13 @@ const NewsLetter: React.FC = () => {
       ) : (
         <p>{announcement}</p>
       )}
-      <Image alt="redirect" src="/arrowIcon.svg" width={10} height={10} />
+      <Image
+        alt="redirect"
+        src="/arrowIcon.svg"
+        width={10}
+        height={10}
+        className="w-auto h-auto"
+      />
     </div>
   );
 };

@@ -124,7 +124,7 @@ const BlogContainer = () => {
       </div>
 
       {/* Blog List */}
-      <div className="justify-center my-10 items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
+      <div className="justify-center m-10 items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
         {filteredBlogs.length === 0 ? (
           <div className="col-span-full text-center">No blogs available.</div>
         ) : (
