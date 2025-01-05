@@ -34,7 +34,6 @@ Builder.registerComponent(Hero, {
       type: "string",
       helperText: "Enter the description text.",
     },
-
     // Container Class Name (with options)
     {
       name: "containerClassName",
@@ -303,46 +302,6 @@ Builder.registerComponent(RelatedPosts, {
   ],
 });
 
-Builder.registerComponent(Featured, {
-  name: "Featured Blogs",
-  inputs: [
-    {
-      name: "bgColor",
-      type: "color",
-      defaultValue: "#fffff",
-    },
-    {
-      name: "subtitle",
-      type: "text",
-      defaultValue: "Check Out Our Latest Blogs",
-      helperText: "Enter the subtitle for this section.",
-    },
-    {
-      name: "title",
-      type: "text",
-      defaultValue: "Featured Blogs",
-      helperText: "Enter the title for this section.",
-    },
-    {
-      name: "description",
-      type: "text",
-      defaultValue: "Discover insights, trends, and tips from our experts.",
-      helperText: "Enter a brief description for this section.",
-    },
-    {
-      name: "refList",
-      type: "list",
-      subFields: [
-        {
-          name: "refs",
-          type: "reference",
-        },
-      ],
-      helperText: "Pass the references to the blogs.",
-    },
-  ],
-});
-
 Builder.registerComponent(Social, {
   name: "Social",
   inputs: [
@@ -350,5 +309,36 @@ Builder.registerComponent(Social, {
     { name: "x", type: "url", defaultValue: "http://" },
     { name: "linkedin", type: "url", defaultValue: "http://" },
     { name: "facebook", type: "url", defaultValue: "http://" },
+  ],
+});
+
+Builder.registerComponent(Featured, {
+  name: "Featured",
+  inputs: [
+    {
+      name: "bgColor",
+      type: "color",
+    },
+    {
+      name: "description",
+      type: "string",
+    },
+    {
+      name: "refList",
+      type: "object",
+      hideFromUI: true,
+      meta: {
+        ts: "BlogData[]",
+      },
+      required: true,
+    },
+    {
+      name: "subtitle",
+      type: "string",
+    },
+    {
+      name: "title",
+      type: "string",
+    },
   ],
 });
