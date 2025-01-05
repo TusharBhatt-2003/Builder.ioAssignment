@@ -1,26 +1,16 @@
-"use client";
-
 interface BlogListProps {
-  items?: string[]; // Accepting an array of strings for items
-  listItem?: string[][]; // Accepting an array of arrays of strings for sublists, corresponding to each item
+  items?: string; // Accepting a rich text as a string
 }
 
-const BlogList = ({ items }: { items: { listItem: string }[] }) => {
+function BlogList({ items }: BlogListProps) {
   return (
-    <div className="bg-[#F1F1F3] dark:bg-[#1f1f1f] text-foreground  rounded-lg p-5">
-      {items && items.length > 0 ? (
-        <ul className="list-disc mx-5">
-          {items.map((item, index) => (
-            <li className="p-1" key={index}>
-              {item.listItem}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No blog items available.</p>
-      )}
+    <div className="bg-[#F1F1F3] dark:bg-[#1f1f1f] text-foreground rounded-lg p-5">
+      <div
+        className="prose prose-lg dark:prose-invert"
+        dangerouslySetInnerHTML={{ __html: items ?? "" }}
+      />
     </div>
   );
-};
+}
 
 export default BlogList;

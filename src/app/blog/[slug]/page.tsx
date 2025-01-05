@@ -1,115 +1,59 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import { builder } from "@builder.io/react";
+import React from "react";
+import { builder, BuilderContent } from "@builder.io/sdk";
 import { RenderBuilderContent } from "@/components/builder";
 import { BlogHeader } from "@/components/Blog-Post/BlogHeader";
 
+// Initialize Builder.io with your API key
 builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
 
-interface BlogData {
+type BlogData = {
   title: string;
-  description: string;
   authorname: string;
-  intro: string;
-  introPara2: string;
   authoravatar: string;
-  image: string;
-  tag: string;
-  read: string;
   date: string;
-  blogImg: string;
-  body: string;
-}
+  read: string;
+  slug: string;
+};
 
-interface Blog {
-  id: string;
+type BlogContent = BuilderContent & {
   data: BlogData;
-}
+};
 
-interface BlogPostPageProps {
-  params: Promise<{ slug: string }>;
-}
+export default async function BlogsPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const slug = params.slug;
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const [blog, setBlog] = useState<Blog | null>(null);
-  const [relatedBlogs, setRelatedBlogs] = useState<Blog[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [slug, setSlug] = useState<string | null>(null);
+  // Fetch all blogs from Builder.io
+  const blogs = (await builder.getAll("blogs", {
+    options: { enrich: true },
+  })) as BlogContent[];
 
-  useEffect(() => {
-    const fetchSlug = async () => {
-      try {
-        const resolvedParams = await params;
-        setSlug(resolvedParams.slug);
-      } catch (err) {
-        setError("Failed to resolve parameters.");
-      }
-    };
+  // Find the blog with the matching slug
+  const currentBlog = blogs.find((blog) => blog.data?.slug === slug);
 
-    fetchSlug();
-  }, [params]);
-
-  useEffect(() => {
-    if (!slug) return;
-
-    const fetchBlogData = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(
-          `https://cdn.builder.io/api/v2/content/blogs?apiKey=2f632f128c9249388f79d2da77ae0417`,
-        );
-        const data = await response.json();
-
-        const foundBlog = data.results.find(
-          (item: any) => item.data.slug === slug,
-        );
-        if (foundBlog) {
-          setBlog(foundBlog);
-
-          const related = data.results.filter(
-            (item: any) => item.id !== foundBlog.id,
-          );
-          setRelatedBlogs(related);
-        } else {
-          setError("Blog not found.");
-        }
-      } catch (err) {
-        setError("Failed to load blog, please try again later.");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBlogData();
-  }, [slug]);
-
-  if (loading) {
-    return <div>Loading...</div>;
+  // Handle the case where no blog matches the slug
+  if (!currentBlog) {
+    return <div>404: Blog not found</div>;
   }
 
-  if (error) {
-    return <div>{error}</div>;
-  }
+  // console.log("Matching Blog:", currentBlog);
 
-  if (!blog) {
-    return <div>Blog not found.</div>;
-  }
   return (
     <div className="p-5 py-20 w-full">
       {/* Blog Header */}
       <BlogHeader
-        title={blog.data.title}
-        authorAvatar={blog.data.authoravatar}
-        authorName={blog.data.authorname}
-        date={blog.data.date}
-        read={blog.data.read}
+        title={currentBlog.data.title}
+        authorAvatar={currentBlog.data.authoravatar}
+        authorName={currentBlog.data.authorname}
+        date={currentBlog.data.date}
+        read={currentBlog.data.read}
       />
-
-      {/* Blog Body */}
       <div className="w-full container h-full">
-        <RenderBuilderContent content={blog} model="blogs" />
+        {/* Blog Body */}
+        <RenderBuilderContent content={currentBlog} model="blogs" />
       </div>
     </div>
   );

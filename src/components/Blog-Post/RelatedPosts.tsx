@@ -1,38 +1,31 @@
 import React from "react";
 import BlogComp from "../BlogContainer/BlogComp";
 
-interface BlogData {
+type TReferencedArticle = {
   heading: string;
-  refs: {
-    value:
-      | {
-          data: {
-            title: string;
-            desc: string;
-            authorname: string;
-            authoravatar: string;
-            blogcardimage: string;
-            tag: string[];
-            read: string;
-            category: string;
-            casestudy: boolean;
-            slug: string;
-          };
-        }[]
-      | null; // Making value nullable to account for missing data
+  article: {
+    value: {
+      data: {
+        title: string;
+        desc: string;
+        authorname: string;
+        authoravatar: string;
+        blogcardimage: string;
+        tag: string[];
+        read: string;
+        category: string;
+        casestudy: boolean;
+        slug: string;
+      };
+    };
   };
-}
-
+};
 interface RelatedPostsProps {
-  refList: BlogData[] | null;
+  referencedArticle: TReferencedArticle[];
 }
 
-const RelatedPosts: React.FC<RelatedPostsProps> = ({ refList }) => {
-  if (!refList || refList.length === 0) {
-    return <div>No references available.</div>;
-  }
-
-  console.log("References:", refList);
+const RelatedPosts: React.FC<RelatedPostsProps> = ({ referencedArticle }) => {
+  // console.log("References:", referencedArticle);
 
   return (
     <div className="grid justify-center items-center px-5">
@@ -40,9 +33,9 @@ const RelatedPosts: React.FC<RelatedPostsProps> = ({ refList }) => {
         Related Posts
       </h1>
       <div className="w-full flex flex-col justify-center items-center gap-5">
-        {refList.map((ref, index) => {
+        {referencedArticle.map((ref, index) => {
           // Check if ref.refs is valid and ref.refs.value is available
-          const refData = ref.refs?.value?.data;
+          const refData = ref.article?.value?.data;
 
           // Fallback for missing data
           const refHeading = ref.heading || "No title available";

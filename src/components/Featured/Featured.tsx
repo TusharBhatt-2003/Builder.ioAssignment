@@ -1,4 +1,3 @@
-"use client";
 import React, { useState } from "react";
 import FeaturedBlogComp from "./FeaturedBlogComp";
 
@@ -19,15 +18,25 @@ interface BlogData {
             slug: string;
           };
         }[]
-      | null; // Making value nullable to account for missing data
+      | null;
   };
 }
 
 interface FeaturedProps {
   refList: BlogData[];
+  subtitle?: string;
+  title?: string;
+  description?: string;
+  bgColor?: string;
 }
 
-const Featured: React.FC<FeaturedProps> = ({ refList }) => {
+const Featured: React.FC<FeaturedProps> = ({
+  refList,
+  subtitle,
+  title,
+  description,
+  bgColor,
+}) => {
   const [showAll, setShowAll] = useState(false);
 
   if (!refList || refList.length === 0) {
@@ -37,7 +46,24 @@ const Featured: React.FC<FeaturedProps> = ({ refList }) => {
   const blogsToDisplay = showAll ? refList : refList.slice(0, 3);
 
   return (
-    <div className="grid bg-background text-foreground bg-[#F1F1F3] justify-center items-center px-5">
+    <div
+      className="grid justify-center items-center px-5"
+      style={{ backgroundColor: bgColor || "transparent" }}
+    >
+      <div className="text-center my-10 mx-5">
+        <div className="container space-y-5">
+          {subtitle && (
+            <p className="text-center text-sm text-[#00C7BE] font-bold">
+              {subtitle}
+            </p>
+          )}
+          <h1 className="text-4xl font-bold">{title}</h1>
+          {description && (
+            <p className="text-sm text-[#595959]">{description}</p>
+          )}
+        </div>
+      </div>
+
       <div className="w-full container py-10 justify-center items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
         {/* Map over the blogs to display and render FeaturedBlogComp */}
         {blogsToDisplay.map((ref, index) => {

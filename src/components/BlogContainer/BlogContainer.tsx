@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import BlogComp from "./BlogComp";
 import Search from "../Search/Search"; // Import the Search component
 import Category from "../Category/Category"; // Assuming Category component is imported
+import { builder } from "@builder.io/sdk";
 import Pagination from "../Pagination/Pagination ";
+
+// Initialize Builder.io with your API key
+builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
 
 interface BlogData {
   title: string;
@@ -22,57 +26,58 @@ interface Blog {
 }
 
 const BlogContainer = () => {
-  const [blogs, setBlogs] = useState<Blog[]>([]); // State for all blogs
-  const [filteredBlogs, setFilteredBlogs] = useState<Blog[]>([]); // State to store filtered blogs
-  const [searchQuery, setSearchQuery] = useState<string>(""); // State for search query
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [blogs, setBlogs] = useState<Blog[]>([]); // Store all blogs
+  const [filteredBlogs, setFilteredBlogs] = useState<Blog[]>([]); // Filtered blogs
+  const [searchQuery, setSearchQuery] = useState<string>(""); // Search query
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState<string | null>(null); // Error state
   const [categories, setCategories] = useState<
     { category: string; link: string }[]
-  >([]); // State for categories
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null); // State for selected category
+  >([]); // Categories
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null); // Selected category
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const blogsPerPage = 9; // Set the number of blogs to display per page
+  const blogsPerPage = 9; // Number of blogs per page
 
-  // Fetch blogs data
+  // Fetch blogs and categories from Builder.io
   useEffect(() => {
-    const fetchBlogs = async () => {
+    const fetchBlogsAndCategories = async () => {
       setLoading(true);
       setError(null);
+
       try {
-        const response = await fetch(
-          `https://cdn.builder.io/api/v2/content/blogs?apiKey=2f632f128c9249388f79d2da77ae0417&limit=50`,
-        );
-        const data = await response.json();
-        setBlogs(data.results);
-        setFilteredBlogs(data.results); // Set the fetched blogs as filtered initially
+        // Fetch blogs
+        const fetchedBlogs = (await builder.getAll("blogs", {
+          options: { enrich: true },
+        })) as Blog[];
+        setBlogs(fetchedBlogs);
+        setFilteredBlogs(fetchedBlogs);
 
         // Extract unique categories from blogs
-        const categoriesSet = new Set<string>(
-          data.results.map((blog: Blog) => blog.data.category),
-        );
-        const categoriesArray = Array.from(categoriesSet).map((category) => ({
+        const uniqueCategories = [
+          ...new Set(fetchedBlogs.map((blog) => blog.data.category)),
+        ].map((category) => ({
           category,
-          link: `/category/${category.toLowerCase().replace(/\s+/g, "-")}`,
+          link: `#${category.toLowerCase().replace(/\s+/g, "-")}`,
         }));
-        setCategories(categoriesArray);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setError("Failed to load blogs, please try again later.");
+        setCategories(uniqueCategories);
+      } catch (err) {
+        setError(
+          "Failed to fetch blogs or categories. Please try again later.",
+        );
       } finally {
         setLoading(false);
       }
     };
 
-    fetchBlogs();
+    fetchBlogsAndCategories();
   }, []);
 
   // Filter blogs based on search query
   useEffect(() => {
     if (searchQuery.trim() === "") {
-      setFilteredBlogs(blogs); // If no search query, show all blogs
+      setFilteredBlogs(blogs); // Show all blogs if no query
     } else {
       const lowerCaseQuery = searchQuery.toLowerCase();
       const filtered = blogs.filter(
@@ -111,17 +116,17 @@ const BlogContainer = () => {
   const totalPages = Math.ceil(filteredBlogs.length / blogsPerPage);
 
   return (
-    <div className="grid md:container   place-content-center">
+    <div className="grid md:container place-content-center">
       <div className="flex w-full items-center justify-center md:justify-between py-10">
         <Category
           categories={categories}
           setSelectedCategory={setSelectedCategory}
         />
         <Search setSearchQuery={setSearchQuery} />
-
-        {loading && <div className="text-center">Loading...</div>}
-        {error && <div className="text-center text-red-500">{error}</div>}
       </div>
+
+      {loading && <div className="text-center">Loading...</div>}
+      {error && <div className="text-center text-red-500">{error}</div>}
 
       {/* Blog List */}
       <div className="justify-center m-10 items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
@@ -130,7 +135,7 @@ const BlogContainer = () => {
         ) : (
           paginateBlogs(filteredBlogs, currentPage).map((blog) => (
             <BlogComp
-              className="min-h-[400px] bg-background text-foreground mx-w-[320px]"
+              className="min-h-[400px] bg-background text-foreground max-w-[320px]"
               key={blog.id}
               image={blog.data.blogcardimage}
               title={blog.data.title}

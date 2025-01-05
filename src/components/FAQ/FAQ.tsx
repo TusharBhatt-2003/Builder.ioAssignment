@@ -51,6 +51,16 @@ const FAQ: React.FC<FAQProps> = ({ items = defaultFAQs }) => {
 
   return (
     <div className="faq-container container space-y-4">
+      <div className="text-center">
+        <div className="container space-y-5 bg-background text-foreground">
+          <p className="text-center text-sm text-[#00C7BE] font-bold">FAQ</p>
+          <h1 className="text-4xl font-bold">Frequently asked questions</h1>
+          <p className="text-sm text-[#595959]">
+            Explore to learn more about how Symbiofy can empower your business
+            with AI-driven solutions.
+          </p>
+        </div>
+      </div>
       {items.map((item, index) => (
         <div
           key={index}
@@ -98,12 +108,5 @@ const FAQ: React.FC<FAQProps> = ({ items = defaultFAQs }) => {
     </div>
   );
 };
-
-const defaultFAQs: FAQItem[] = [
-  {
-    question: "What is Builder.io?",
-    answer: "Builder.io is a drag-and-drop page builder for modern web apps.",
-  },
-];
 
 export default FAQ;

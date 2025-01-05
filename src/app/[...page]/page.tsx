@@ -11,17 +11,14 @@ interface PageProps {
 
 export default async function Page(props: PageProps) {
   const resolvedParams = await props.params;
-
   const builderModelName = "page";
 
   const content = await builder
-
     .get(builderModelName, {
       userAttributes: {
         urlPath: "/" + (resolvedParams?.page?.join("/") || ""),
       },
     })
-
     .toPromise();
 
   return (

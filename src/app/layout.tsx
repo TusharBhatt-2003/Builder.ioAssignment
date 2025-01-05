@@ -31,7 +31,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
         <Header />
-        <main className="mt-20">{children}</main>
+        <main className="mt-48">{children}</main>
         <CTA />
         <Footer />
       </body>

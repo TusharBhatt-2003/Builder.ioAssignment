@@ -17,28 +17,35 @@ builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
 Builder.registerComponent(Hero, {
   name: "Hero",
   inputs: [
-    { name: "subtitle", type: "text", defaultValue: "BLOG" },
-    { name: "title", type: "text", required: true },
-    { name: "description", type: "text" },
     {
-      name: "subtitleClassName",
-      type: "text",
-      defaultValue: "text-center text-sm text-[#00C7BE] font-bold",
+      name: "subtitle",
+      type: "string",
+      defaultValue: "BLOG",
+      helperText: "Enter the subtitle text.",
     },
     {
-      name: "titleClassName",
-      type: "text",
-      defaultValue: "text-4xl font-bold",
+      name: "title",
+      type: "string",
+      required: true,
+      helperText: "Enter the title.",
     },
     {
-      name: "descriptionClassName",
-      type: "text",
-      defaultValue: "text-sm text-[#595959]",
+      name: "description",
+      type: "string",
+      helperText: "Enter the description text.",
     },
+
+    // Container Class Name (with options)
     {
       name: "containerClassName",
-      type: "text",
+      type: "string",
+      enum: ["text-left my-10 mx-5", "text-center py-10 px-5"],
       defaultValue: "text-left my-10 mx-5",
+      options: [
+        { value: "text-left my-10 mx-5", label: "Left Aligned, Margin" },
+        { value: "text-center py-10 px-5", label: "Center Aligned, Padding" },
+      ],
+      helperText: "Select the style for the container.",
     },
   ],
 });
@@ -103,37 +110,6 @@ Builder.registerComponent(BlogContainer, {
 //     },
 //   ],
 // });
-
-Builder.registerComponent(Heading, {
-  name: "Heading",
-  inputs: [
-    {
-      name: "alignment",
-      type: "string",
-      enum: ["center", "left", "right"],
-    },
-    {
-      name: "color",
-      type: "string",
-    },
-    {
-      name: "fontWeight",
-      type: "string",
-      enum: ["bold", "bolder", "lighter", "normal"],
-    },
-    {
-      name: "size",
-      type: "string",
-      enum: ["2xl", "3xl", "4xl", "5xl", "6xl", "lg", "md", "sm", "xl", "xs"],
-      required: true,
-    },
-    {
-      name: "text",
-      type: "string",
-      required: true,
-    },
-  ],
-});
 
 Builder.registerComponent(Heading, {
   name: "Heading",
@@ -280,14 +256,7 @@ Builder.registerComponent(BlogList, {
   inputs: [
     {
       name: "items",
-      type: "list", // Input for a list of items
-      subFields: [
-        {
-          name: "listItem",
-          type: "text",
-          required: false,
-        },
-      ],
+      type: "richText",
     },
   ],
 });
@@ -315,12 +284,12 @@ Builder.registerComponent(RelatedPosts, {
   name: "RelatedPosts",
   inputs: [
     {
-      name: "refList",
+      name: "referencedArticle",
       type: "list",
       required: true,
       subFields: [
         {
-          name: "refs",
+          name: "article",
           type: "reference",
           model: "blog",
           required: true,
@@ -335,8 +304,31 @@ Builder.registerComponent(RelatedPosts, {
 });
 
 Builder.registerComponent(Featured, {
-  name: "Featured",
+  name: "Featured Blogs",
   inputs: [
+    {
+      name: "bgColor",
+      type: "color",
+      defaultValue: "#fffff",
+    },
+    {
+      name: "subtitle",
+      type: "text",
+      defaultValue: "Check Out Our Latest Blogs",
+      helperText: "Enter the subtitle for this section.",
+    },
+    {
+      name: "title",
+      type: "text",
+      defaultValue: "Featured Blogs",
+      helperText: "Enter the title for this section.",
+    },
+    {
+      name: "description",
+      type: "text",
+      defaultValue: "Discover insights, trends, and tips from our experts.",
+      helperText: "Enter a brief description for this section.",
+    },
     {
       name: "refList",
       type: "list",
@@ -344,10 +336,9 @@ Builder.registerComponent(Featured, {
         {
           name: "refs",
           type: "reference",
-          model: "blog",
-          required: true,
         },
       ],
+      helperText: "Pass the references to the blogs.",
     },
   ],
 });
