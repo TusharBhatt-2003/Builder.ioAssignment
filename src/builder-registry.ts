@@ -317,7 +317,7 @@ Builder.registerComponent(Featured, {
   inputs: [
     {
       name: "bgColor",
-      type: "color",
+      type: "string",
     },
     {
       name: "description",
@@ -325,12 +325,14 @@ Builder.registerComponent(Featured, {
     },
     {
       name: "refList",
-      type: "object",
-      hideFromUI: true,
-      meta: {
-        ts: "BlogData[]",
-      },
-      required: true,
+      type: "list",
+      subFields: [
+        {
+          name: "refs",
+          type: "reference"
+        },
+      ],
+      helperText: "Pass the references to the blogs.",
     },
     {
       name: "subtitle",

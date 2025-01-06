@@ -53,7 +53,7 @@ function Header() {
       <header className=" bg-background text-foreground  w-full border-b border-zinc-500 ">
         <div className="flex py-4 px-5 justify-between items-center">
           {/* Logo Section */}
-          <div>
+          <div className="">
             <Link href="/home">
               <Image
                 src="/logo.svg"

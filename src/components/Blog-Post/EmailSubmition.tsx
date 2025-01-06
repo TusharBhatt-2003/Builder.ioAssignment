@@ -14,7 +14,7 @@ const EmailSubmition: React.FC<EmailSubmitionProps> = ({
   buttonText = "Submit",
 }) => {
   return (
-    <form className="space-y-5">
+    <form className="space-y-5 my-10">
       <h1 className="text-3xl font-bold">{heading}</h1>
       <p className="text-lg text-[#595959] font-semibold">{paragraph}</p>
       <div className="w-full rounded-lg">

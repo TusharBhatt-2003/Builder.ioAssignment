@@ -70,7 +70,7 @@ const FeaturedBlogComp: React.FC<FeaturedBlogCompProp> = ({
           src="/arrowIcon.svg"
           width={10}
           height={10}
-          className="w-auto h-auto"
+          className="w-auto h-auto animate-pulse"
         />
       </motion.div>
     </motion.div>

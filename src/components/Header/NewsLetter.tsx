@@ -57,7 +57,7 @@ const NewsLetter: React.FC = () => {
         src="/arrowIcon.svg"
         width={10}
         height={10}
-        className="w-auto h-auto"
+        className="w-auto h-auto animate-bounce"
       />
     </div>
   );
